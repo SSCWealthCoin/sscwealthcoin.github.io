@@ -8,9 +8,13 @@
 
   <style>
     @keyframes glowPulse {
-      0% { box-shadow: 0 0 8px rgba(212,175,55,0.4), 0 0 15px rgba(212,175,55,0.3); }
-      50% { box-shadow: 0 0 22px rgba(255,215,0,0.9), 0 0 35px rgba(212,175,55,0.6); }
-      100% { box-shadow: 0 0 8px rgba(212,175,55,0.4), 0 0 15px rgba(212,175,55,0.3); }
+      0% { box-shadow: 0 0 8px rgba(212,175,55,0.4); }
+      50% { box-shadow: 0 0 22px rgba(255,215,0,0.9); }
+      100% { box-shadow: 0 0 8px rgba(212,175,55,0.4); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
     }
     body {
       font-family: "Poppins", sans-serif;
@@ -22,116 +26,85 @@
     }
     header {
       background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-      min-height: 420px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       text-align: center;
-      color: #d4af37;
-      position: relative;
-      padding: 40px 20px;
+      padding: 50px 20px 30px;
     }
     img.logo {
-      width: 150px;
-      height: auto;
-      margin-bottom: 15px;
+      width: 140px;
       border-radius: 50%;
       border: 2px solid #d4af37;
       background-color: #000;
-      padding: 5px;
+      padding: 6px;
       animation: glowPulse 4s infinite ease-in-out;
     }
     h1 {
-      font-size: 2em;
+      font-size: 1.9em;
       color: #d4af37;
       margin: 10px 0;
     }
     p.subtitle {
-      font-size: 1.15em;
+      font-size: 1.1em;
       color: #f5e6a3;
-      font-weight: 300;
     }
 
-    /* Uniswap button */
+    /* Shimmering Uniswap button */
     .cta-button {
+      display: inline-block;
       margin-top: 25px;
-      background: linear-gradient(90deg, #d4af37, #f9e07f);
+      background: linear-gradient(120deg, #d4af37, #fff2b3, #d4af37);
+      background-size: 200% auto;
       color: #111;
-      padding: 15px 50px;
+      padding: 14px 50px;
       border-radius: 35px;
-      text-decoration: none;
       font-weight: 700;
-      font-size: 1.15em;
-      box-shadow: 0 0 20px rgba(212,175,55,0.6);
-      transition: all 0.4s ease;
+      font-size: 1.1em;
+      text-decoration: none;
+      box-shadow: 0 0 15px rgba(212,175,55,0.6);
+      animation: shimmer 4s linear infinite;
+      transition: all 0.3s ease;
     }
     .cta-button:hover {
-      background: linear-gradient(90deg, #fce57c, #ffe999);
+      transform: scale(1.07);
       box-shadow: 0 0 35px 8px rgba(255,215,0,0.9);
-      transform: scale(1.08);
-      color: #000;
     }
 
     section {
-      padding: 40px 20px;
+      padding: 25px 20px;
       max-width: 900px;
       margin: auto;
-      text-align: left;
     }
     h2 {
       border-bottom: 1px solid #d4af37;
-      padding-bottom: 5px;
+      padding-bottom: 4px;
       color: #d4af37;
     }
-    a {
-      color: #d4af37;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    ul {
-      line-height: 1.8;
-    }
+    a { color: #d4af37; text-decoration: none; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+    ul { line-height: 1.7; }
 
-    /* Chart container */
     .graph-container {
       text-align: center;
-      margin: 40px auto;
+      margin: 25px auto;
       max-width: 900px;
     }
     .graph-container iframe {
       border: 2px solid #d4af37;
       border-radius: 12px;
-      width: 100%;
-      height: 500px;
+      width: 95%;
+      height: 420px;
     }
 
-    /* Responsive adjustments */
     @media (max-width: 768px) {
       h1 { font-size: 1.6em; }
-      .cta-button {
-        width: 80%;
-        font-size: 1em;
-        padding: 12px 30px;
-      }
-      .graph-container iframe {
-        height: 360px;
-      }
-    }
-    @media (max-width: 480px) {
-      .graph-container iframe {
-        height: 300px;
-      }
+      .cta-button { width: 80%; font-size: 1em; padding: 12px 20px; }
+      .graph-container iframe { height: 320px; }
     }
 
     .hashtag {
       text-align: center;
       color: #b89b2f;
       font-size: 0.85em;
-      margin: 40px 20px;
+      margin: 35px 15px;
     }
     footer {
       background-color: #000;

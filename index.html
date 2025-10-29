@@ -5,23 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SSC Wealth Coin (SSCWC) | Gold-Backed Cryptocurrency</title>
   <meta name="description" content="SSC Wealth Coin (SSCWC) — a gold-backed cryptocurrency on Binance Smart Chain (BEP-20), offering stability and transparency in digital asset investments." />
+
   <style>
     @keyframes glowPulse {
       0% { box-shadow: 0 0 8px rgba(212,175,55,0.4), 0 0 15px rgba(212,175,55,0.3); }
-      50% { box-shadow: 0 0 18px rgba(255,215,0,0.8), 0 0 30px rgba(212,175,55,0.6); }
+      50% { box-shadow: 0 0 22px rgba(255,215,0,0.9), 0 0 35px rgba(212,175,55,0.6); }
       100% { box-shadow: 0 0 8px rgba(212,175,55,0.4), 0 0 15px rgba(212,175,55,0.3); }
     }
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #111;
+      background-color: #0b0b0b;
       color: #d4af37;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
     header {
-      background: url("gold-banner.png") no-repeat center center;
-      background-size: cover;
-      height: 420px;
+      background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+      min-height: 420px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -29,22 +30,12 @@
       text-align: center;
       color: #d4af37;
       position: relative;
-    }
-    header::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0, 0, 0, 0.55);
-      z-index: 1;
-    }
-    header * {
-      position: relative;
-      z-index: 2;
+      padding: 40px 20px;
     }
     img.logo {
-      width: 140px;
+      width: 150px;
       height: auto;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       border-radius: 50%;
       border: 2px solid #d4af37;
       background-color: #000;
@@ -57,37 +48,36 @@
       margin: 10px 0;
     }
     p.subtitle {
-      font-size: 1.1em;
+      font-size: 1.15em;
       color: #f5e6a3;
       font-weight: 300;
     }
-    .button-group {
-      margin-top: 20px;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .button-group a {
-      background-color: #d4af37;
+
+    /* Uniswap button */
+    .cta-button {
+      margin-top: 25px;
+      background: linear-gradient(90deg, #d4af37, #f9e07f);
       color: #111;
-      padding: 10px 20px;
-      border-radius: 25px;
+      padding: 15px 50px;
+      border-radius: 35px;
       text-decoration: none;
-      font-weight: 600;
-      box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+      font-weight: 700;
+      font-size: 1.15em;
+      box-shadow: 0 0 20px rgba(212,175,55,0.6);
       transition: all 0.4s ease;
     }
-    .button-group a:hover {
-      background-color: #e4c05a;
-      color: #fff;
-      box-shadow: 0 0 15px 4px rgba(255,215,0,0.8), 0 0 30px 8px rgba(212,175,55,0.6);
-      transform: scale(1.05);
+    .cta-button:hover {
+      background: linear-gradient(90deg, #fce57c, #ffe999);
+      box-shadow: 0 0 35px 8px rgba(255,215,0,0.9);
+      transform: scale(1.08);
+      color: #000;
     }
+
     section {
       padding: 40px 20px;
       max-width: 900px;
       margin: auto;
+      text-align: left;
     }
     h2 {
       border-bottom: 1px solid #d4af37;
@@ -105,17 +95,38 @@
     ul {
       line-height: 1.8;
     }
+
+    /* Chart container */
     .graph-container {
       text-align: center;
-      margin: 30px auto;
+      margin: 40px auto;
       max-width: 900px;
     }
     .graph-container iframe {
       border: 2px solid #d4af37;
-      border-radius: 10px;
+      border-radius: 12px;
       width: 100%;
       height: 500px;
     }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.6em; }
+      .cta-button {
+        width: 80%;
+        font-size: 1em;
+        padding: 12px 30px;
+      }
+      .graph-container iframe {
+        height: 360px;
+      }
+    }
+    @media (max-width: 480px) {
+      .graph-container iframe {
+        height: 300px;
+      }
+    }
+
     .hashtag {
       text-align: center;
       color: #b89b2f;
@@ -138,21 +149,20 @@
     <h1>SSC Wealth Coin (SSCWC)</h1>
     <p class="subtitle">The Future of Gold on Blockchain</p>
 
-    <div class="button-group">
-      <a href="https://app.uniswap.org/" target="_blank">Uniswap</a>
-      <a href="https://github.com/SSCWealthCoin" target="_blank">GitHub</a>
-      <a href="https://wa.me/27649546047" target="_blank">WhatsApp</a>
-    </div>
+    <a class="cta-button" href="https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447" target="_blank" rel="noopener">
+      Buy SSC Wealth Coin on Uniswap
+    </a>
   </header>
 
   <div class="graph-container">
-    <iframe src="https://www.geckoterminal.com/bsc/pools/0x337ce3cd733e380f7352888536598e5aa84b968a?embed=1&info=0&swaps=0&dark=1" allowfullscreen></iframe>
+    <iframe src="https://www.geckoterminal.com/bsc/pools/0x337ce3cd733e380f7352888536598e5aa84b968a?embed=1&info=1&swaps=0&dark=1" allowfullscreen></iframe>
   </div>
 
   <section>
     <h2>About SSC Wealth Coin</h2>
     <p>
-      <strong>SSC Wealth Coin (SSCWC)</strong> is a cryptocurrency backed by gold bullion, designed to be a stable digital asset by linking its value to gold prices. It operates as a <strong>BEP-20 token</strong> on the Binance Smart Chain (BSC) and is tradable on decentralized exchanges like <a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x337ce3cd733e380f7352888536598e5aa84b968a?t=1761077646193" target="_blank">DEXTswap</a>.
+      <strong>SSC Wealth Coin (SSCWC)</strong> is a cryptocurrency backed by gold bullion, designed to be a stable digital asset by linking its value to gold prices. It operates as a <strong>BEP-20 token</strong> on the Binance Smart Chain (BSC) and is tradable on decentralized exchanges like
+      <a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x337ce3cd733e380f7352888536598e5aa84b968a?t=1761077646193" target="_blank">DEXTswap</a>.
     </p>
     <p>
       The project’s <a href="https://www.scribd.com" target="_blank">white paper</a> is available on Scribd.  
@@ -175,8 +185,8 @@
   </div>
 
   <footer>
-    Disclaimer: SSCWC is a cryptocurrency project. Not financial advice.  
-    Verify risks and audits before investing.
+    © <script>document.write(new Date().getFullYear());</script> SSC Wealth Coin — Gold-Backed Digital Asset  
+    <br>Disclaimer: SSCWC is a cryptocurrency project — not financial advice.
   </footer>
 </body>
 </html>

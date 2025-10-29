@@ -6,6 +6,11 @@
   <title>SSC Wealth Coin (SSCWC) | Gold-Backed Cryptocurrency</title>
   <meta name="description" content="SSC Wealth Coin (SSCWC) — a gold-backed cryptocurrency on Binance Smart Chain (BEP-20), offering stability and transparency in digital asset investments." />
   <style>
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 8px rgba(212,175,55,0.4), 0 0 15px rgba(212,175,55,0.3); }
+      50% { box-shadow: 0 0 18px rgba(255,215,0,0.8), 0 0 30px rgba(212,175,55,0.6); }
+      100% { box-shadow: 0 0 8px rgba(212,175,55,0.4), 0 0 15px rgba(212,175,55,0.3); }
+    }
     body {
       font-family: "Poppins", sans-serif;
       background-color: #111;
@@ -16,7 +21,7 @@
     header {
       background: url("gold-banner.png") no-repeat center center;
       background-size: cover;
-      height: 400px;
+      height: 420px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -44,6 +49,7 @@
       border: 2px solid #d4af37;
       background-color: #000;
       padding: 5px;
+      animation: glowPulse 4s infinite ease-in-out;
     }
     h1 {
       font-size: 2em;
@@ -69,11 +75,14 @@
       border-radius: 25px;
       text-decoration: none;
       font-weight: 600;
-      transition: all 0.3s ease;
+      box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+      transition: all 0.4s ease;
     }
     .button-group a:hover {
-      background-color: #b88a1e;
+      background-color: #e4c05a;
       color: #fff;
+      box-shadow: 0 0 15px 4px rgba(255,215,0,0.8), 0 0 30px 8px rgba(212,175,55,0.6);
+      transform: scale(1.05);
     }
     section {
       padding: 40px 20px;
@@ -95,6 +104,17 @@
     }
     ul {
       line-height: 1.8;
+    }
+    .graph-container {
+      text-align: center;
+      margin: 30px auto;
+      max-width: 900px;
+    }
+    .graph-container iframe {
+      border: 2px solid #d4af37;
+      border-radius: 10px;
+      width: 100%;
+      height: 500px;
     }
     .hashtag {
       text-align: center;
@@ -124,6 +144,10 @@
       <a href="https://wa.me/27649546047" target="_blank">WhatsApp</a>
     </div>
   </header>
+
+  <div class="graph-container">
+    <iframe src="https://www.geckoterminal.com/bsc/pools/0x337ce3cd733e380f7352888536598e5aa84b968a?embed=1&info=0&swaps=0&dark=1" allowfullscreen></iframe>
+  </div>
 
   <section>
     <h2>About SSC Wealth Coin</h2>

@@ -23,12 +23,13 @@
       align-items: center;
       text-align: center;
       color: #d4af37;
+      position: relative;
     }
     header::after {
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.55);
       z-index: 1;
     }
     header * {
@@ -53,6 +54,29 @@
       font-size: 1.1em;
       color: #f5e6a3;
       font-weight: 300;
+    }
+    .button-group {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .button-group a {
+      background-color: #d4af37;
+      color: #111;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+      transition: all 0.4s ease;
+    }
+    .button-group a:hover {
+      background-color: #e4c05a;
+      color: #fff;
+      box-shadow: 0 0 15px 4px rgba(255, 215, 0, 0.8), 0 0 30px 8px rgba(212, 175, 55, 0.6);
+      transform: scale(1.05);
     }
     section {
       padding: 40px 20px;
@@ -96,6 +120,12 @@
     <img src="ChatGPT%20Image%20Oct%201%2C%202025%2C%2004_13_30%20PM%20(1).png" alt="SSC Wealth Coin Logo" class="logo" />
     <h1>SSC Wealth Coin (SSCWC)</h1>
     <p class="subtitle">The Future of Gold on Blockchain</p>
+
+    <div class="button-group">
+      <a href="https://app.uniswap.org/" target="_blank">Uniswap</a>
+      <a href="https://github.com/SSCWealthCoin" target="_blank">GitHub</a>
+      <a href="https://wa.me/27649546047" target="_blank">WhatsApp</a>
+    </div>
   </header>
 
   <section>

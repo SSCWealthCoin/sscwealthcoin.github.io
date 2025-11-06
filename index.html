@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SSCWC Chess Crypto Kings | Gold on Blockchain</title>
-
+  <title>SSCWC Chess Crypto Kings</title>
   <style>
     body {
       margin: 0;
@@ -22,15 +21,18 @@
       justify-content: center;
       align-items: center;
     }
+
     .logo-container img {
       width: 160px;
       border-radius: 50%;
       box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
     }
+
     @keyframes rotateOnce {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
     @keyframes shimmer {
       from { filter: brightness(1) drop-shadow(0 0 15px gold); }
       to { filter: brightness(1.4) drop-shadow(0 0 25px #ffd700); }
@@ -41,6 +43,7 @@
       color: #ffd700;
       margin-top: 20px;
     }
+
     h2 {
       font-size: 1.2em;
       font-style: italic;
@@ -57,6 +60,7 @@
       font-size: 1em;
       font-weight: 600;
     }
+
     .btn-pink { background: #ff42e3; color: white; }
     .btn-blue { background: #007bff; color: white; }
     .btn-green { background: #00b853; color: white; }
@@ -90,6 +94,7 @@
       justify-content: center;
       align-items: center;
     }
+
     #board {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
@@ -100,6 +105,7 @@
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
       position: relative;
     }
+
     .square {
       width: 100%;
       height: 100%;
@@ -109,8 +115,10 @@
       font-size: 26px;
       user-select: none;
     }
+
     .light { background-color: #f9d98b; }
     .dark { background-color: #946b32; }
+
     .white-piece { color: #fff8dc; text-shadow: 0 0 10px gold; }
     .black-piece { color: #3b2c0a; text-shadow: 0 0 10px #d4af37; }
 
@@ -121,39 +129,47 @@
     }
   </style>
 </head>
-
 <body>
+  <!-- Logo -->
   <div class="logo-container">
-    <img src="https://sscwealthcoin.github.io/logo.png" alt="SSC Wealth Coin Logo">
+    <img src="Gifcmr3XoAA_WF-.jpeg" alt="SSC Wealth Coin Logo">
   </div>
 
+  <!-- Title -->
   <h1>SSCWC Chess Crypto Kings</h1>
   <h2>The Future of Gold on Blockchain</h2>
 
-  <input id="email" type="email" placeholder="Your email (for quick sign-in)" />
+  <!-- Email Input -->
+  <input type="email" id="email" placeholder="Your email (for quick sign-in)" />
   <div>
     <button class="btn btn-pink" onclick="sendMagicLink()">Send Magic Link</button>
   </div>
+
+  <!-- Wallet and AI buttons -->
   <div>
     <button class="btn btn-blue" onclick="connectWallet()">Connect Wallet (BSC Testnet)</button>
     <button class="btn btn-green" onclick="startAI()">Play AI (Level 3)</button>
   </div>
+
+  <!-- Buy button -->
   <div>
-    <a href="https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447" target="_blank" class="btn btn-gold">🪙 Buy SSCWC on Uniswap</a>
+    <button class="btn btn-gold" onclick="window.open('https://app.uniswap.org', '_blank')">🪙 Buy SSCWC on Uniswap</button>
   </div>
 
   <p id="authStatus">Not signed in — enter email and click "Send Magic Link"</p>
 
+  <!-- Chessboard -->
   <div id="chessContainer">
     <div id="board"></div>
   </div>
 
-  <footer>© <script>document.write(new Date().getFullYear())</script> SSC Wealth Coin — All Rights Reserved</footer>
+  <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
   <script>
     // --- Build visible board ---
     function buildBoard() {
       const board = document.getElementById("board");
+      if (!board) return;
       board.innerHTML = "";
       const layout = [
         ["♜","♞","♝","♛","♚","♝","♞","♜"],
@@ -180,7 +196,9 @@
         }
       }
     }
-    document.addEventListener("DOMContentLoaded", buildBoard);
+
+    // Call immediately (works on GitHub Pages)
+    buildBoard();
 
     // --- Placeholder actions ---
     function sendMagicLink() {

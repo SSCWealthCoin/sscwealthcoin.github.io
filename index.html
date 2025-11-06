@@ -6,14 +6,15 @@
   <title>SSCWC Chess Crypto Kings | Gold on Blockchain</title>
   <meta name="description" content="Play chess powered by SSC Wealth Coin (SSCWC) — gold-backed cryptocurrency on Binance Smart Chain with AI opponent and wallet integration." />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+  <!-- ✅ Chessboard CDN (fixed) -->
+  <link rel="stylesheet" href="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" />
+  <script src="https://unpkg.com/chess.js@0.13.4/dist/chess.min.js"></script>
+  <script src="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
 
-  <!-- Firebase SDK -->
+  <!-- ✅ Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-    import { getAuth, signInWithEmailLink, sendSignInLinkToEmail, isSignInWithEmailLink } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { getAuth, sendSignInLinkToEmail, signInWithEmailLink, isSignInWithEmailLink } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCiU4bLmbd5pJ6sv13TAMIk4eh8Exhid4o",
@@ -24,6 +25,7 @@
       messagingSenderId: "382398698085",
       appId: "1:382398698085:web:cc902f0f1b6b1b93602c8c"
     };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth();
 
@@ -58,19 +60,21 @@
       margin: 0;
       padding: 0;
     }
-    header {
-      padding: 30px 10px;
-    }
+
+    header { padding: 30px 10px; }
+
     img.logo {
       width: 130px;
       border-radius: 50%;
       border: 2px solid #FFD700;
       animation: pulse 3s infinite;
     }
+
     @keyframes pulse {
       0%,100% { box-shadow: 0 0 15px rgba(255,215,0,0.3); }
       50% { box-shadow: 0 0 40px rgba(255,215,0,0.9); }
     }
+
     h1 { color: #FFD700; margin: 10px 0; }
     p.subtitle { color: #f2e6a7; font-style: italic; }
 
@@ -95,6 +99,7 @@
       color: #111;
       transition: 0.3s;
     }
+
     .pink { background: #ff66cc; }
     .blue { background: #3399ff; }
     .green { background: #33cc66; }
@@ -108,7 +113,8 @@
     }
 
     #board {
-      width: 360px;
+      width: 400px;
+      height: 400px;
       margin: 30px auto;
       border: 3px solid #FFD700;
       border-radius: 8px;
@@ -142,31 +148,33 @@
   <div id="board"></div>
 
   <script>
-    // Initialize Chessboard and AI
-    const game = new Chess();
-    const board = Chessboard('board', {
-      draggable: true,
-      position: 'start',
-      onDrop: (source, target) => {
-        const move = game.move({ from: source, to: target, promotion: 'q' });
-        if (move === null) return 'snapback';
-        window.setTimeout(makeAIMove, 400);
+    // ✅ Initialize Chessboard safely after DOM loads
+    document.addEventListener("DOMContentLoaded", function () {
+      const game = new Chess();
+      const board = Chessboard('board', {
+        draggable: true,
+        position: 'start',
+        onDrop: (source, target) => {
+          const move = game.move({ from: source, to: target, promotion: 'q' });
+          if (move === null) return 'snapback';
+          window.setTimeout(makeAIMove, 400);
+        }
+      });
+
+      function makeAIMove() {
+        if (game.game_over()) return;
+        const moves = game.moves();
+        const aiMove = moves[Math.floor(Math.random() * moves.length)];
+        game.move(aiMove);
+        board.position(game.fen());
       }
+
+      window.startGame = () => {
+        game.reset();
+        board.start();
+        alert("New SSCWC AI Chess Game Started ♟️");
+      };
     });
-
-    function makeAIMove() {
-      if (game.game_over()) return;
-      const moves = game.moves();
-      const aiMove = moves[Math.floor(Math.random() * moves.length)];
-      game.move(aiMove);
-      board.position(game.fen());
-    }
-
-    function startGame() {
-      game.reset();
-      board.start();
-      alert("New SSCWC AI Chess Game Started ♟️");
-    }
   </script>
 
   <footer>

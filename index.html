@@ -6,7 +6,7 @@
   <title>SSCWC Chess Crypto Kings | Gold on Blockchain</title>
   <meta name="description" content="Play chess powered by SSC Wealth Coin (SSCWC) — gold-backed cryptocurrency on Binance Smart Chain with AI opponent and wallet integration." />
 
-  <!-- ✅ Working Chessboard.js and Chess.js -->
+  <!-- ✅ Working Libraries -->
   <link rel="stylesheet" href="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" />
   <script src="https://unpkg.com/chess.js@0.13.4/dist/chess.min.js"></script>
   <script src="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
@@ -49,9 +49,9 @@
     }
 
     button {
-      display: block;
-      margin: 15px auto;
-      padding: 12px 30px;
+      display: inline-block;
+      margin: 10px 8px;
+      padding: 12px 25px;
       border: none;
       border-radius: 25px;
       font-weight: bold;
@@ -73,8 +73,8 @@
     }
 
     #board {
-      width: 400px;
-      height: 400px;
+      width: 90vw;
+      max-width: 400px;
       margin: 30px auto;
       border: 3px solid #FFD700;
       border-radius: 8px;
@@ -108,19 +108,18 @@
   <div id="board"></div>
 
   <script>
-    // ✅ Initialize Chessboard safely after DOM loads
     document.addEventListener("DOMContentLoaded", function () {
       const game = new Chess();
 
-      // ✅ Define piece images path manually (fixes blank board)
+      // ✅ Use a verified image set hosted on GitHub CDN
       const cfg = {
         draggable: true,
         position: 'start',
-        pieceTheme: 'https://unpkg.com/chessboardjs@1.0.0/img/chesspieces/wikipedia/{piece}.png',
+        pieceTheme: 'https://raw.githubusercontent.com/oakmac/chessboardjs/master/img/chesspieces/wikipedia/{piece}.png',
         onDrop: (source, target) => {
           const move = game.move({ from: source, to: target, promotion: 'q' });
           if (move === null) return 'snapback';
-          window.setTimeout(makeAIMove, 400);
+          setTimeout(makeAIMove, 400);
         }
       };
 

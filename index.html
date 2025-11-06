@@ -7,8 +7,9 @@
 
   <meta name="description" content="Play chess powered by SSC Wealth Coin (SSCWC) — gold-backed cryptocurrency on Binance Smart Chain with AI opponent and wallet integration.">
 
-  <!-- ✅ New working chessboard -->
+  <!-- ✅ Chessboard + Chess.js -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chess.js@0.13.4/dist/chess.min.js"></script>
 
@@ -65,7 +66,6 @@
       background: linear-gradient(120deg,#FFD700,#fff2b3,#FFD700);
       box-shadow: 0 0 15px rgba(255,215,0,0.6);
     }
-
     .gold:hover {
       transform: scale(1.05);
       box-shadow: 0 0 25px rgba(255,215,0,1);
@@ -96,32 +96,30 @@
     <p class="subtitle">The Future of Gold on Blockchain</p>
 
     <input type="email" id="emailInput" placeholder="Your email (for quick sign-in)" />
-    <button class="pink" onclick="sendMagicLink()">Send Magic Link</button>
+    <button class="pink" onclick="alert('Magic link coming soon!')">Send Magic Link</button>
     <button class="blue" onclick="alert('Wallet connect coming soon!')">Connect Wallet (BSC Testnet)</button>
     <button class="green" onclick="startGame()">Play AI (Level 3)</button>
     <a class="gold" href="https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447" target="_blank" rel="noopener">🪙 Buy SSCWC on Uniswap</a>
 
-    <p id="authStatus">Not signed in — enter email and click "Send Magic Link"</p>
+    <p id="authStatus">Not signed in — click “Send Magic Link”</p>
   </header>
 
   <div id="board"></div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    $(function() {
       const game = new Chess();
 
-      const cfg = {
+      const board = Chessboard('board', {
         draggable: true,
         position: 'start',
         pieceTheme: 'https://cdn.jsdelivr.net/npm/@chrisoakman/chessboardjs@1.0.0/img/chesspieces/wikipedia/{piece}.png',
         onDrop: function(source, target) {
           const move = game.move({ from: source, to: target, promotion: 'q' });
           if (move === null) return 'snapback';
-          window.setTimeout(makeAIMove, 250);
+          setTimeout(makeAIMove, 300);
         }
-      };
-
-      const board = Chessboard('board', cfg);
+      });
 
       function makeAIMove() {
         const possibleMoves = game.moves();
@@ -131,7 +129,7 @@
         board.position(game.fen());
       }
 
-      window.startGame = () => {
+      window.startGame = function() {
         game.reset();
         board.start();
         alert("♟️ New SSCWC AI Game Started!");

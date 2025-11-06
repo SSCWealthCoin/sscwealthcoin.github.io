@@ -5,147 +5,198 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SSCWC Chess Crypto Kings | Gold on Blockchain</title>
 
-  <meta name="description" content="Play SSCWC Chess Crypto Kings — powered by SSC Wealth Coin on Binance Smart Chain." />
-
-  <!-- ✅ Use reliable CDN fallbacks -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css" />
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
-
   <style>
     body {
-      background-color: #000;
-      color: #FFD700;
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
       margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #000;
+      color: #fff;
+      text-align: center;
     }
 
-    header { padding: 30px 10px; }
-
-    img.logo {
-      width: 130px;
+    /* Logo Section */
+    .logo-container {
+      margin-top: 40px;
+      animation: rotateOnce 4s ease-in-out 1, shimmer 3s 4s infinite alternate;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .logo-container img {
+      width: 160px;
       border-radius: 50%;
-      border: 2px solid #FFD700;
-      animation: pulse 3s infinite;
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
+    }
+    @keyframes rotateOnce {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes shimmer {
+      from { filter: brightness(1) drop-shadow(0 0 15px gold); }
+      to { filter: brightness(1.4) drop-shadow(0 0 25px #ffd700); }
     }
 
-    @keyframes pulse {
-      0%,100% { box-shadow: 0 0 10px rgba(255,215,0,0.2); }
-      50% { box-shadow: 0 0 40px rgba(255,215,0,0.9); }
+    h1 {
+      font-size: 1.6em;
+      color: #ffd700;
+      margin-top: 20px;
+    }
+    h2 {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #ffe066;
+      margin-bottom: 30px;
     }
 
-    h1 { color: #FFD700; }
-    p.subtitle { color: #f2e6a7; font-style: italic; }
+    .btn {
+      padding: 12px 18px;
+      margin: 8px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    .btn-pink { background: #ff42e3; color: white; }
+    .btn-blue { background: #007bff; color: white; }
+    .btn-green { background: #00b853; color: white; }
+    .btn-gold {
+      background: linear-gradient(180deg, #ffea70 0%, #ffcc00 100%);
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
 
     input {
-      width: 250px;
-      padding: 10px;
+      padding: 12px;
+      width: 280px;
       border-radius: 8px;
-      border: 1px solid #FFD700;
+      border: 1px solid #333;
+      margin: 8px 0;
       background: #111;
-      color: #FFD700;
+      color: #fff;
+      text-align: center;
     }
 
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #111;
-      transition: 0.3s;
+    #chessContainer {
+      margin: 50px auto;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle at center, #111 60%, #000 100%);
+      border: 2px solid #ffd700;
+      border-radius: 10px;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.25);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
-    .pink { background: #ff66cc; }
-    .blue { background: #3399ff; }
-    .green { background: #33cc66; }
-    .gold {
-      background: linear-gradient(120deg,#FFD700,#fff2b3,#FFD700);
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-    }
-    .gold:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(255,215,0,1);
-    }
-
     #board {
-      width: 90vw;
-      max-width: 400px;
-      margin: 25px auto;
-      border: 3px solid #FFD700;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(255,215,0,0.6);
-      background: #333;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      width: 300px;
+      height: 300px;
+      border: 5px solid #ffd700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+      position: relative;
     }
+    .square {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      user-select: none;
+    }
+    .light { background-color: #f9d98b; }
+    .dark { background-color: #946b32; }
+    .white-piece { color: #fff8dc; text-shadow: 0 0 10px gold; }
+    .black-piece { color: #3b2c0a; text-shadow: 0 0 10px #d4af37; }
 
     footer {
-      font-size: 0.8em;
-      color: #f0d986;
-      padding: 20px;
-      border-top: 1px solid #FFD700;
+      margin: 40px 0;
+      color: #777;
+      font-size: 0.9em;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <img src="https://sscwealthcoin.github.io/logo.png" alt="SSCWC Logo" class="logo" />
-    <h1>SSCWC Chess Crypto Kings</h1>
-    <p class="subtitle">The Future of Gold on Blockchain</p>
+  <div class="logo-container">
+    <img src="https://sscwealthcoin.github.io/logo.png" alt="SSC Wealth Coin Logo">
+  </div>
 
-    <input type="email" id="emailInput" placeholder="Your email (for quick sign-in)" />
-    <button class="pink" onclick="alert('Magic link coming soon!')">Send Magic Link</button>
-    <button class="blue" onclick="alert('Wallet connect coming soon!')">Connect Wallet (BSC Testnet)</button>
-    <button class="green" onclick="startGame()">Play AI (Level 3)</button>
-    <a class="gold" href="https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447" target="_blank" rel="noopener">🪙 Buy SSCWC on Uniswap</a>
+  <h1>SSCWC Chess Crypto Kings</h1>
+  <h2>The Future of Gold on Blockchain</h2>
 
-    <p id="authStatus">Not signed in — click “Send Magic Link”</p>
-  </header>
+  <input id="email" type="email" placeholder="Your email (for quick sign-in)" />
+  <div>
+    <button class="btn btn-pink" onclick="sendMagicLink()">Send Magic Link</button>
+  </div>
+  <div>
+    <button class="btn btn-blue" onclick="connectWallet()">Connect Wallet (BSC Testnet)</button>
+    <button class="btn btn-green" onclick="startAI()">Play AI (Level 3)</button>
+  </div>
+  <div>
+    <a href="https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447" target="_blank" class="btn btn-gold">🪙 Buy SSCWC on Uniswap</a>
+  </div>
 
-  <div id="board"></div>
+  <p id="authStatus">Not signed in — enter email and click "Send Magic Link"</p>
+
+  <div id="chessContainer">
+    <div id="board"></div>
+  </div>
+
+  <footer>© <script>document.write(new Date().getFullYear())</script> SSC Wealth Coin — All Rights Reserved</footer>
 
   <script>
-    $(document).ready(function () {
-      console.log("✅ jQuery ready, loading chessboard...");
-      const game = new Chess();
-
-      const board = Chessboard('board', {
-        draggable: true,
-        position: 'start',
-        pieceTheme:
-          'https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/img/chesspieces/wikipedia/{piece}.png',
-        onDrop: function (source, target) {
-          const move = game.move({
-            from: source,
-            to: target,
-            promotion: 'q',
-          });
-          if (move === null) return 'snapback';
-          setTimeout(makeAIMove, 300);
-        },
-      });
-
-      function makeAIMove() {
-        const possibleMoves = game.moves();
-        if (game.game_over() || possibleMoves.length === 0) return;
-        const randomIdx = Math.floor(Math.random() * possibleMoves.length);
-        game.move(possibleMoves[randomIdx]);
-        board.position(game.fen());
+    // --- Build visible board ---
+    function buildBoard() {
+      const board = document.getElementById("board");
+      board.innerHTML = "";
+      const layout = [
+        ["♜","♞","♝","♛","♚","♝","♞","♜"],
+        ["♟","♟","♟","♟","♟","♟","♟","♟"],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["♙","♙","♙","♙","♙","♙","♙","♙"],
+        ["♖","♘","♗","♕","♔","♗","♘","♖"]
+      ];
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const square = document.createElement("div");
+          square.className = "square " + ((r + c) % 2 === 0 ? "light" : "dark");
+          const piece = layout[r][c];
+          if (piece) {
+            const span = document.createElement("span");
+            span.innerHTML = piece;
+            span.className = (r < 2) ? "black-piece" : (r > 5 ? "white-piece" : "");
+            square.appendChild(span);
+          }
+          board.appendChild(square);
+        }
       }
+    }
+    document.addEventListener("DOMContentLoaded", buildBoard);
 
-      window.startGame = function () {
-        game.reset();
-        board.start();
-        alert('♟️ SSCWC AI Game Started!');
-      };
-    });
+    // --- Placeholder actions ---
+    function sendMagicLink() {
+      const email = document.getElementById("email").value;
+      if (!email) return alert("Enter your email first!");
+      document.getElementById("authStatus").innerText = `Magic link sent to ${email}`;
+      alert("Magic link feature will connect via Firebase soon.");
+    }
+
+    function connectWallet() {
+      alert("Wallet connection (BSC Testnet) coming soon.");
+    }
+
+    function startAI() {
+      alert("AI Level 3 mode loading — feature under integration.");
+    }
   </script>
-
-  <footer>
-    © <script>document.write(new Date().getFullYear());</script> SSC Wealth Coin — All Rights Reserved
-  </footer>
 </body>
 </html>

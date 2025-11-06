@@ -3,163 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SSC Wealth Coin (SSCWC) | Gold-Backed Cryptocurrency</title>
-  <meta name="description" content="SSC Wealth Coin (SSCWC) — a gold-backed cryptocurrency on Binance Smart Chain (BEP-20), offering stability and transparency in digital asset investments." />
+  <title>SSCWC Chess Crypto Kings | Gold on Blockchain</title>
+  <meta name="description" content="Play chess powered by SSC Wealth Coin (SSCWC) — gold-backed cryptocurrency on Binance Smart Chain with AI opponent and wallet integration." />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getAuth, signInWithEmailLink, sendSignInLinkToEmail, isSignInWithEmailLink } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCiU4bLmbd5pJ6sv13TAMIk4eh8Exhid4o",
+      authDomain: "sscwc-chess.firebaseapp.com",
+      databaseURL: "https://sscwc-chess-default-rtdb.firebaseio.com",
+      projectId: "sscwc-chess",
+      storageBucket: "sscwc-chess.firebasestorage.app",
+      messagingSenderId: "382398698085",
+      appId: "1:382398698085:web:cc902f0f1b6b1b93602c8c"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    window.sendMagicLink = () => {
+      const email = document.getElementById('emailInput').value;
+      const actionCodeSettings = { url: window.location.href, handleCodeInApp: true };
+      sendSignInLinkToEmail(auth, email, actionCodeSettings)
+        .then(() => alert(`Magic link sent to ${email}`))
+        .catch(error => alert(error.message));
+    };
+
+    window.onload = () => {
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        let email = window.localStorage.getItem('emailForSignIn');
+        if (!email) email = window.prompt('Confirm your email for sign-in');
+        signInWithEmailLink(auth, email, window.location.href)
+          .then(() => {
+            document.getElementById('authStatus').innerText = `Signed in as ${email}`;
+            window.localStorage.removeItem('emailForSignIn');
+          })
+          .catch(console.error);
+      }
+    };
+  </script>
 
   <style>
-    @keyframes glowPulse {
-      0% { box-shadow: 0 0 8px rgba(212,175,55,0.4); }
-      50% { box-shadow: 0 0 22px rgba(255,215,0,0.9); }
-      100% { box-shadow: 0 0 8px rgba(212,175,55,0.4); }
-    }
-    @keyframes shimmer {
-      0% { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
     body {
+      background-color: #000;
+      color: #FFD700;
       font-family: "Poppins", sans-serif;
-      background-color: #0b0b0b;
-      color: #d4af37;
+      text-align: center;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
     }
     header {
-      background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-      text-align: center;
-      padding: 50px 20px 30px;
+      padding: 30px 10px;
     }
     img.logo {
-      width: 140px;
+      width: 130px;
       border-radius: 50%;
-      border: 2px solid #d4af37;
-      background-color: #000;
-      padding: 6px;
-      animation: glowPulse 4s infinite ease-in-out;
+      border: 2px solid #FFD700;
+      animation: pulse 3s infinite;
     }
-    h1 {
-      font-size: 1.9em;
-      color: #d4af37;
-      margin: 10px 0;
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 15px rgba(255,215,0,0.3); }
+      50% { box-shadow: 0 0 40px rgba(255,215,0,0.9); }
     }
-    p.subtitle {
-      font-size: 1.1em;
-      color: #f5e6a3;
+    h1 { color: #FFD700; margin: 10px 0; }
+    p.subtitle { color: #f2e6a7; font-style: italic; }
+
+    input {
+      width: 250px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #FFD700;
+      background: #111;
+      color: #FFD700;
+      margin-top: 10px;
     }
 
-    /* Shimmering Uniswap button */
-    .cta-button {
-      display: inline-block;
-      margin-top: 25px;
-      background: linear-gradient(120deg, #d4af37, #fff2b3, #d4af37);
-      background-size: 200% auto;
+    button {
+      display: block;
+      margin: 15px auto;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
       color: #111;
-      padding: 14px 50px;
-      border-radius: 35px;
-      font-weight: 700;
-      font-size: 1.1em;
-      text-decoration: none;
-      box-shadow: 0 0 15px rgba(212,175,55,0.6);
-      animation: shimmer 4s linear infinite;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
-    .cta-button:hover {
+    .pink { background: #ff66cc; }
+    .blue { background: #3399ff; }
+    .green { background: #33cc66; }
+    .gold {
+      background: linear-gradient(120deg,#FFD700,#fff2b3,#FFD700);
+      box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    }
+    .gold:hover {
       transform: scale(1.07);
-      box-shadow: 0 0 35px 8px rgba(255,215,0,0.9);
+      box-shadow: 0 0 30px rgba(255,215,0,1);
     }
 
-    section {
-      padding: 25px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    h2 {
-      border-bottom: 1px solid #d4af37;
-      padding-bottom: 4px;
-      color: #d4af37;
-    }
-    a { color: #d4af37; text-decoration: none; font-weight: bold; }
-    a:hover { text-decoration: underline; }
-    ul { line-height: 1.7; }
-
-    .graph-container {
-      text-align: center;
-      margin: 25px auto;
-      max-width: 900px;
-    }
-    .graph-container iframe {
-      border: 2px solid #d4af37;
-      border-radius: 12px;
-      width: 95%;
-      height: 420px;
+    #board {
+      width: 360px;
+      margin: 30px auto;
+      border: 3px solid #FFD700;
+      border-radius: 8px;
+      box-shadow: 0 0 25px rgba(255,215,0,0.6);
     }
 
-    @media (max-width: 768px) {
-      h1 { font-size: 1.6em; }
-      .cta-button { width: 80%; font-size: 1em; padding: 12px 20px; }
-      .graph-container iframe { height: 320px; }
-    }
-
-    .hashtag {
-      text-align: center;
-      color: #b89b2f;
-      font-size: 0.85em;
-      margin: 35px 15px;
-    }
     footer {
-      background-color: #000;
-      color: #b89b2f;
-      text-align: center;
+      font-size: 0.8em;
+      color: #f0d986;
       padding: 20px;
-      font-size: 0.85em;
-      border-top: 1px solid #d4af37;
+      border-top: 1px solid #FFD700;
     }
   </style>
 </head>
+
 <body>
   <header>
-    <img src="ChatGPT%20Image%20Oct%201%2C%202025%2C%2004_13_30%20PM%20(1).png" alt="SSC Wealth Coin Logo" class="logo" />
-    <h1>SSC Wealth Coin (SSCWC)</h1>
+    <img src="https://sscwealthcoin.github.io/logo.png" alt="SSCWC Logo" class="logo" />
+    <h1>SSCWC Chess Crypto Kings</h1>
     <p class="subtitle">The Future of Gold on Blockchain</p>
 
-    <a class="cta-button" href="https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447" target="_blank" rel="noopener">
-      Buy SSC Wealth Coin on Uniswap
-    </a>
+    <input type="email" id="emailInput" placeholder="Your email (for quick sign-in)" />
+    <button class="pink" onclick="sendMagicLink()">Send Magic Link</button>
+    <button class="blue" onclick="alert('Wallet connect coming soon!')">Connect Wallet (BSC Testnet)</button>
+    <button class="green" onclick="startGame()">Create Game</button>
+    <a class="gold" href="https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447" target="_blank" rel="noopener">🪙 Buy SSCWC on Uniswap</a>
+
+    <p id="authStatus">Not signed in — enter email and click "Send Magic Link"</p>
   </header>
 
-  <div class="graph-container">
-    <iframe src="https://www.geckoterminal.com/bsc/pools/0x337ce3cd733e380f7352888536598e5aa84b968a?embed=1&info=1&swaps=0&dark=1" allowfullscreen></iframe>
-  </div>
+  <div id="board"></div>
 
-  <section>
-    <h2>About SSC Wealth Coin</h2>
-    <p>
-      <strong>SSC Wealth Coin (SSCWC)</strong> is a cryptocurrency backed by gold bullion, designed to be a stable digital asset by linking its value to gold prices. It operates as a <strong>BEP-20 token</strong> on the Binance Smart Chain (BSC) and is tradable on decentralized exchanges like
-      <a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x337ce3cd733e380f7352888536598e5aa84b968a?t=1761077646193" target="_blank">DEXTswap</a>.
-    </p>
-    <p>
-      The project’s <a href="https://www.scribd.com" target="_blank">white paper</a> is available on Scribd.  
-      The official <strong>contract address</strong> on the BNB Chain is:  
-      <code>0xd7deadbf768dec8ac13850e4f6787ac53a9d0447</code>
-    </p>
+  <script>
+    // Initialize Chessboard and AI
+    const game = new Chess();
+    const board = Chessboard('board', {
+      draggable: true,
+      position: 'start',
+      onDrop: (source, target) => {
+        const move = game.move({ from: source, to: target, promotion: 'q' });
+        if (move === null) return 'snapback';
+        window.setTimeout(makeAIMove, 400);
+      }
+    });
 
-    <h2>Key Features</h2>
-    <ul>
-      <li><strong>Gold-backed:</strong> Stability supported by physical gold reserves.</li>
-      <li><strong>Volatility Hedge:</strong> Designed to protect against crypto market fluctuations.</li>
-      <li><strong>Secure Storage:</strong> Assets stored in certified vaults with Krugerrand verification.</li>
-      <li><strong>BEP-20 Token:</strong> Runs on Binance Smart Chain (BSC) for fast and low-cost transactions.</li>
-      <li><strong>Trading:</strong> Available via SSCWC/WBNB pair on <a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x337ce3cd733e380f7352888536598e5aa84b968a?t=1761077646193" target="_blank">DEXTswap</a>.</li>
-    </ul>
-  </section>
+    function makeAIMove() {
+      if (game.game_over()) return;
+      const moves = game.moves();
+      const aiMove = moves[Math.floor(Math.random() * moves.length)];
+      game.move(aiMove);
+      board.position(game.fen());
+    }
 
-  <div class="hashtag">
-    #digitalgold #bitcoin #cryptocurrency #crypto #gold #blockchain #binance #bnb #SSCWC #SSCWealthCoin #investing #trading #southafricatraders #cryptonews #ethereum #dailytradeoptions
-  </div>
+    function startGame() {
+      game.reset();
+      board.start();
+      alert("New SSCWC AI Chess Game Started ♟️");
+    }
+  </script>
 
   <footer>
-    © <script>document.write(new Date().getFullYear());</script> SSC Wealth Coin — Gold-Backed Digital Asset  
-    <br>Disclaimer: SSCWC is a cryptocurrency project — not financial advice.
+    © <script>document.write(new Date().getFullYear());</script> SSC Wealth Coin — All Rights Reserved
   </footer>
 </body>
 </html>

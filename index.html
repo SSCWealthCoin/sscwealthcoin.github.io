@@ -13,6 +13,7 @@
       text-align: center;
     }
 
+    /* Logo Section */
     .logo-container {
       margin-top: 40px;
       animation: rotateOnce 4s ease-in-out 1, shimmer 3s 4s infinite alternate;
@@ -38,7 +39,7 @@
     }
 
     h1 {
-      font-size: 1.6em;
+      font-size: 1.8em;
       color: #ffd700;
       margin-top: 20px;
     }
@@ -83,8 +84,8 @@
 
     #chessContainer {
       margin: 50px auto;
-      width: 320px;
-      height: 320px;
+      width: 340px;
+      height: 340px;
       background: radial-gradient(circle at center, #111 60%, #000 100%);
       border: 2px solid #ffd700;
       border-radius: 10px;
@@ -98,8 +99,8 @@
       display: grid;
       grid-template-columns: repeat(8, 1fr);
       grid-template-rows: repeat(8, 1fr);
-      width: 300px;
-      height: 300px;
+      width: 320px;
+      height: 320px;
       border: 5px solid #ffd700;
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
       position: relative;
@@ -130,25 +131,25 @@
 </head>
 <body>
   <div class="logo-container">
-    <img src="Gifcmr3XoAA_WF-.jpeg" alt="SSC Wealth Coin Logo">
+    <img src="IMG-20251022-WA0007.jpg" alt="SSC Wealth Coin Logo">
   </div>
 
   <h1>SSCWC Chess Crypto Kings</h1>
   <h2>The Future of Gold on Blockchain</h2>
 
-  <input type="email" id="email" placeholder="Your email (for quick sign-in)" />
+  <input type="email" placeholder="Your email (for quick sign-in)" />
   <div>
-    <button class="btn btn-pink" onclick="sendMagicLink()">Send Magic Link</button>
+    <button class="btn btn-pink">Send Magic Link</button>
   </div>
   <div>
-    <button class="btn btn-blue" onclick="connectWallet()">Connect Wallet (BSC Testnet)</button>
-    <button class="btn btn-green" onclick="startAI()">Play AI (Level 3)</button>
+    <button class="btn btn-blue">Connect Wallet (BSC Testnet)</button>
+    <button class="btn btn-green">Play AI (Level 3)</button>
   </div>
   <div>
-    <button class="btn btn-gold" onclick="window.open('https://app.uniswap.org', '_blank')">🪙 Buy SSCWC on Uniswap</button>
+    <button class="btn btn-gold">🪙 Buy SSCWC on Uniswap</button>
   </div>
 
-  <p id="authStatus">Not signed in — enter email and click "Send Magic Link"</p>
+  <p>Not signed in — enter email and click "Send Magic Link"</p>
 
   <div id="chessContainer">
     <div id="board"></div>
@@ -157,11 +158,11 @@
   <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    function buildBoard() {
       const board = document.getElementById("board");
       if (!board) return;
 
-      const layout = [
+      const initial = [
         ["♜","♞","♝","♛","♚","♝","♞","♜"],
         ["♟","♟","♟","♟","♟","♟","♟","♟"],
         ["","","","","","","",""],
@@ -172,36 +173,23 @@
         ["♖","♘","♗","♕","♔","♗","♘","♖"]
       ];
 
-      for (let r = 0; r < 8; r++) {
-        for (let c = 0; c < 8; c++) {
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
           const square = document.createElement("div");
-          square.className = "square " + ((r + c) % 2 === 0 ? "light" : "dark");
-          const piece = layout[r][c];
+          square.className = "square " + ((row + col) % 2 === 0 ? "light" : "dark");
+          const piece = initial[row][col];
           if (piece) {
-            const span = document.createElement("span");
-            span.innerHTML = piece;
-            span.className = (r < 2) ? "black-piece" : (r > 5 ? "white-piece" : "");
-            square.appendChild(span);
+            const pieceEl = document.createElement("span");
+            pieceEl.innerHTML = piece;
+            pieceEl.className = (row < 2) ? "black-piece" : (row > 5 ? "white-piece" : "");
+            square.appendChild(pieceEl);
           }
           board.appendChild(square);
         }
       }
-    });
-
-    function sendMagicLink() {
-      const email = document.getElementById("email").value;
-      if (!email) return alert("Enter your email first!");
-      document.getElementById("authStatus").innerText = `Magic link sent to ${email}`;
-      alert("Magic link feature will connect via Firebase soon.");
     }
 
-    function connectWallet() {
-      alert("Wallet connection (BSC Testnet) coming soon.");
-    }
-
-    function startAI() {
-      alert("AI Level 3 mode loading — feature under integration.");
-    }
+    document.addEventListener("DOMContentLoaded", buildBoard);
   </script>
 </body>
 </html>

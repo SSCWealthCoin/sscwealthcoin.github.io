@@ -13,7 +13,6 @@
       text-align: center;
     }
 
-    /* Logo Section */
     .logo-container {
       margin-top: 40px;
       animation: rotateOnce 4s ease-in-out 1, shimmer 3s 4s infinite alternate;
@@ -130,35 +129,27 @@
   </style>
 </head>
 <body>
-  <!-- Logo -->
   <div class="logo-container">
     <img src="Gifcmr3XoAA_WF-.jpeg" alt="SSC Wealth Coin Logo">
   </div>
 
-  <!-- Title -->
   <h1>SSCWC Chess Crypto Kings</h1>
   <h2>The Future of Gold on Blockchain</h2>
 
-  <!-- Email Input -->
   <input type="email" id="email" placeholder="Your email (for quick sign-in)" />
   <div>
     <button class="btn btn-pink" onclick="sendMagicLink()">Send Magic Link</button>
   </div>
-
-  <!-- Wallet and AI buttons -->
   <div>
     <button class="btn btn-blue" onclick="connectWallet()">Connect Wallet (BSC Testnet)</button>
     <button class="btn btn-green" onclick="startAI()">Play AI (Level 3)</button>
   </div>
-
-  <!-- Buy button -->
   <div>
     <button class="btn btn-gold" onclick="window.open('https://app.uniswap.org', '_blank')">🪙 Buy SSCWC on Uniswap</button>
   </div>
 
   <p id="authStatus">Not signed in — enter email and click "Send Magic Link"</p>
 
-  <!-- Chessboard -->
   <div id="chessContainer">
     <div id="board"></div>
   </div>
@@ -166,11 +157,10 @@
   <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
   <script>
-    // --- Build visible board ---
-    function buildBoard() {
+    document.addEventListener("DOMContentLoaded", function() {
       const board = document.getElementById("board");
       if (!board) return;
-      board.innerHTML = "";
+
       const layout = [
         ["♜","♞","♝","♛","♚","♝","♞","♜"],
         ["♟","♟","♟","♟","♟","♟","♟","♟"],
@@ -181,6 +171,7 @@
         ["♙","♙","♙","♙","♙","♙","♙","♙"],
         ["♖","♘","♗","♕","♔","♗","♘","♖"]
       ];
+
       for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
           const square = document.createElement("div");
@@ -195,12 +186,8 @@
           board.appendChild(square);
         }
       }
-    }
+    });
 
-    // Call immediately (works on GitHub Pages)
-    buildBoard();
-
-    // --- Placeholder actions ---
     function sendMagicLink() {
       const email = document.getElementById("email").value;
       if (!email) return alert("Enter your email first!");

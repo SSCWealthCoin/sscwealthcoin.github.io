@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SSCWC Chess Crypto Kings | Gold on Blockchain</title>
 
-  <meta name="description" content="Play chess powered by SSC Wealth Coin (SSCWC) — gold-backed cryptocurrency on Binance Smart Chain with AI opponent and wallet integration.">
+  <meta name="description" content="Play SSCWC Chess Crypto Kings — powered by SSC Wealth Coin on Binance Smart Chain." />
 
-  <!-- ✅ Chessboard + Chess.js -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chess.js@0.13.4/dist/chess.min.js"></script>
+  <!-- ✅ Use reliable CDN fallbacks -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
 
   <style>
     body {
@@ -78,6 +78,7 @@
       border: 3px solid #FFD700;
       border-radius: 8px;
       box-shadow: 0 0 20px rgba(255,215,0,0.6);
+      background: #333;
     }
 
     footer {
@@ -107,18 +108,24 @@
   <div id="board"></div>
 
   <script>
-    $(function() {
+    $(document).ready(function () {
+      console.log("✅ jQuery ready, loading chessboard...");
       const game = new Chess();
 
       const board = Chessboard('board', {
         draggable: true,
         position: 'start',
-        pieceTheme: 'https://cdn.jsdelivr.net/npm/@chrisoakman/chessboardjs@1.0.0/img/chesspieces/wikipedia/{piece}.png',
-        onDrop: function(source, target) {
-          const move = game.move({ from: source, to: target, promotion: 'q' });
+        pieceTheme:
+          'https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/img/chesspieces/wikipedia/{piece}.png',
+        onDrop: function (source, target) {
+          const move = game.move({
+            from: source,
+            to: target,
+            promotion: 'q',
+          });
           if (move === null) return 'snapback';
           setTimeout(makeAIMove, 300);
-        }
+        },
       });
 
       function makeAIMove() {
@@ -129,10 +136,10 @@
         board.position(game.fen());
       }
 
-      window.startGame = function() {
+      window.startGame = function () {
         game.reset();
         board.start();
-        alert("♟️ New SSCWC AI Game Started!");
+        alert('♟️ SSCWC AI Game Started!');
       };
     });
   </script>

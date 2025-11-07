@@ -4,192 +4,131 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SSCWC Chess Crypto Kings</title>
+  <link rel="stylesheet" href="https://unpkg.com/chessboard-element@latest/dist/chessboard-1.0.0.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0-beta.1/chess.js"></script>
+  <script src="https://unpkg.com/chessboard-element@latest"></script>
   <style>
     body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #000;
-      color: #fff;
-      text-align: center;
-    }
-
-    /* Logo Section */
-    .logo-container {
-      margin-top: 40px;
-      animation: rotateOnce 4s ease-in-out 1, shimmer 3s 4s infinite alternate;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .logo-container img {
-      width: 160px;
-      border-radius: 50%;
-      box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
-    }
-
-    @keyframes rotateOnce {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes shimmer {
-      from { filter: brightness(1) drop-shadow(0 0 15px gold); }
-      to { filter: brightness(1.4) drop-shadow(0 0 25px #ffd700); }
-    }
-
-    h1 {
-      font-size: 1.8em;
+      background-color: #000;
       color: #ffd700;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header img {
+      width: 140px;
       margin-top: 20px;
     }
-
+    h1 {
+      font-size: 1.8rem;
+      margin-top: 10px;
+    }
     h2 {
-      font-size: 1.2em;
-      font-style: italic;
-      color: #ffe066;
-      margin-bottom: 30px;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #ccc;
+      margin-bottom: 20px;
     }
-
-    .btn {
-      padding: 12px 18px;
-      margin: 8px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1em;
-      font-weight: 600;
-    }
-
-    .btn-pink { background: #ff42e3; color: white; }
-    .btn-blue { background: #007bff; color: white; }
-    .btn-green { background: #00b853; color: white; }
-    .btn-gold {
-      background: linear-gradient(180deg, #ffea70 0%, #ffcc00 100%);
-      color: #000;
-      font-weight: bold;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-    }
-
     input {
-      padding: 12px;
-      width: 280px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      margin: 8px 0;
-      background: #111;
-      color: #fff;
-      text-align: center;
-    }
-
-    #chessContainer {
-      margin: 50px auto;
-      width: 340px;
-      height: 340px;
-      background: radial-gradient(circle at center, #111 60%, #000 100%);
-      border: 2px solid #ffd700;
+      padding: 10px;
+      width: 250px;
       border-radius: 10px;
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.25);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border: none;
+      margin-bottom: 10px;
     }
-
-    #board {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      grid-template-rows: repeat(8, 1fr);
-      width: 320px;
-      height: 320px;
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    }
+    .btn-pink { background: #ff4edb; color: #fff; }
+    .btn-blue { background: #007bff; color: #fff; }
+    .btn-green { background: #28a745; color: #fff; }
+    .btn-yellow { background: #ffd700; color: #000; }
+    chess-board {
+      width: 360px;
+      height: 360px;
+      margin: 25px auto;
       border: 5px solid #ffd700;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-      position: relative;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
     }
-
-    .square {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      user-select: none;
-    }
-
-    .light { background-color: #f9d98b; }
-    .dark { background-color: #946b32; }
-
-    .white-piece { color: #fff8dc; text-shadow: 0 0 10px gold; }
-    .black-piece { color: #3b2c0a; text-shadow: 0 0 10px #d4af37; }
-
     footer {
-      margin: 40px 0;
-      color: #777;
-      font-size: 0.9em;
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-top: 20px;
+      padding-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="logo-container">
-    <img src="IMG-20251022-WA0007.jpg" alt="SSC Wealth Coin Logo">
-  </div>
+  <header>
+    <img src="ChatGPT Image Oct 1, 2025, 04_13_30 PM (1).jpg" alt="SSC Wealth Coin Logo" />
+    <h1>SSCWC Chess Crypto Kings</h1>
+    <h2>The Future of Gold on Blockchain</h2>
+  </header>
 
-  <h1>SSCWC Chess Crypto Kings</h1>
-  <h2>The Future of Gold on Blockchain</h2>
+  <main>
+    <input type="email" id="email" placeholder="Your email (for quick sign-in)" />
+    <button class="btn-pink">Send Magic Link</button>
+    <button class="btn-blue">Connect Wallet (BSC Testnet)</button>
+    <button class="btn-green">Play AI (Level 3)</button>
+    <a href="https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447?utm_medium=mobile&utm_source=share-tdp" target="_blank">
+      <button class="btn-yellow">💰 Buy SSCWC on Uniswap</button>
+    </a>
+  </main>
 
-  <input type="email" placeholder="Your email (for quick sign-in)" />
-  <div>
-    <button class="btn btn-pink">Send Magic Link</button>
-  </div>
-  <div>
-    <button class="btn btn-blue">Connect Wallet (BSC Testnet)</button>
-    <button class="btn btn-green">Play AI (Level 3)</button>
-  </div>
-  <div>
-    <button class="btn btn-gold">🪙 Buy SSCWC on Uniswap</button>
-  </div>
+  <chess-board id="board" position="start"></chess-board>
 
-  <p>Not signed in — enter email and click "Send Magic Link"</p>
-
-  <div id="chessContainer">
-    <div id="board"></div>
-  </div>
-
-  <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
+  <footer>
+    © 2025 SSC Wealth Coin — All Rights Reserved
+  </footer>
 
   <script>
-    function buildBoard() {
-      const board = document.getElementById("board");
-      if (!board) return;
+    const board = document.getElementById("board");
+    const game = new Chess();
 
-      const initial = [
-        ["♜","♞","♝","♛","♚","♝","♞","♜"],
-        ["♟","♟","♟","♟","♟","♟","♟","♟"],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["","","","","","","",""],
-        ["♙","♙","♙","♙","♙","♙","♙","♙"],
-        ["♖","♘","♗","♕","♔","♗","♘","♖"]
-      ];
-
-      for (let row = 0; row < 8; row++) {
-        for (let col = 0; col < 8; col++) {
-          const square = document.createElement("div");
-          square.className = "square " + ((row + col) % 2 === 0 ? "light" : "dark");
-          const piece = initial[row][col];
-          if (piece) {
-            const pieceEl = document.createElement("span");
-            pieceEl.innerHTML = piece;
-            pieceEl.className = (row < 2) ? "black-piece" : (row > 5 ? "white-piece" : "");
-            square.appendChild(pieceEl);
-          }
-          board.appendChild(square);
-        }
+    board.addEventListener("drag-start", (e) => {
+      const { source, piece } = e.detail;
+      if (game.game_over() || piece.search(/^b/) !== -1) {
+        e.preventDefault();
+        return;
       }
-    }
+    });
 
-    document.addEventListener("DOMContentLoaded", buildBoard);
+    board.addEventListener("drop", (e) => {
+      const move = game.move({
+        from: e.detail.source,
+        to: e.detail.target,
+        promotion: 'q'
+      });
+
+      if (move === null) {
+        e.preventDefault();
+        return;
+      }
+
+      board.setPosition(game.fen());
+      setTimeout(makeAIMove, 500);
+    });
+
+    function makeAIMove() {
+      const moves = game.moves();
+      if (moves.length === 0) return;
+      const move = moves[Math.floor(Math.random() * moves.length)];
+      game.move(move);
+      board.setPosition(game.fen());
+    }
   </script>
 </body>
 </html>

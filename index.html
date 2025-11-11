@@ -59,6 +59,12 @@
       cursor: pointer;
       font-size: 1em;
       font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
     }
 
     .btn-pink { background: #ff42e3; color: white; }
@@ -127,11 +133,22 @@
       color: #777;
       font-size: 0.9em;
     }
+
+    /* Responsive for mobile */
+    @media (max-width: 480px) {
+      #chessContainer {
+        width: 260px;
+        height: 260px;
+      }
+      #board {
+        width: 240px;
+        height: 240px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="logo-container">
-    <!-- Replace this image with your own logo file if desired -->
     <img src="https://raw.githubusercontent.com/SSCWealthCoin/sscwealthcoin.github.io/main/Gifcmr3XoAA_WF-.jpeg" alt="SSC Wealth Coin Logo">
   </div>
 
@@ -161,6 +178,8 @@
   <script>
     function buildBoard() {
       const board = document.getElementById("board");
+      if (!board) return; // safety check
+
       const initial = [
         ["♜","♞","♝","♛","♚","♝","♞","♜"],
         ["♟","♟","♟","♟","♟","♟","♟","♟"],
@@ -188,7 +207,8 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", buildBoard);
+    // Ensures board builds after everything loads
+    window.onload = buildBoard;
   </script>
 </body>
 </html>

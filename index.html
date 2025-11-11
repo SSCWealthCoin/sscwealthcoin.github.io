@@ -1,41 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SSCWC Chess Crypto Kings</title>
-  <meta name="description" content="Play SSCWC Chess Crypto Kings — The Future of Gold on Blockchain" />
-  <link rel="icon" href="https://sscwealthcoin.github.io/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard-1.0.0.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard-1.0.0.min.js"></script>
+
   <style>
-    body { margin:0; font-family: 'Poppins', sans-serif; background:#000; color:#fff; text-align:center; }
-    h1 { color:#ffd700; margin-top:20px; }
-    h2 { color:#ffe066; font-style:italic; margin-bottom:30px; }
-    .btn { padding:12px 18px; margin:8px; border:none; border-radius:10px; cursor:pointer; font-size:1em; font-weight:600; }
-    .btn-pink { background:#ff42e3; color:white; }
-    .btn-blue { background:#007bff; color:white; }
-    .btn-green { background:#00b853; color:white; }
-    .btn-gold { background:linear-gradient(180deg,#ffea70 0%,#ffcc00 100%); color:#000; font-weight:bold; box-shadow:0 0 20px rgba(255,215,0,0.6); }
-    input { padding:12px; width:280px; border-radius:8px; border:1px solid #333; margin:8px 0; background:#111; color:#fff; text-align:center; }
-    #chessContainer { margin:50px auto; width:320px; height:320px; background:radial-gradient(circle at center,#111 60%,#000 100%); border:2px solid #ffd700; border-radius:10px; box-shadow:0 0 40px rgba(255,215,0,0.25); display:flex; justify-content:center; align-items:center; }
-    #board { display:grid; grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(8,1fr); width:300px; height:300px; border:5px solid #ffd700; box-shadow:0 0 30px rgba(255,215,0,0.3); }
-    .square { display:flex; align-items:center; justify-content:center; font-size:26px; }
-    .light { background-color:#f9d98b; }
-    .dark { background-color:#946b32; }
-    .white-piece { color:#fff8dc; text-shadow:0 0 10px gold; }
-    .black-piece { color:#3b2c0a; text-shadow:0 0 10px #d4af37; }
+    body {
+      background: #000;
+      color: gold;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: gold;
+      margin-top: 20px;
+    }
+    #board {
+      width: 90vw;
+      max-width: 400px;
+      margin: 20px auto;
+      border: 3px solid gold;
+      box-shadow: 0 0 20px gold;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      background: gold;
+      color: black;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <div class="logo-container"><img src="logo.png" alt="SSC Wealth Coin Logo" width="150" style="border-radius:50%;box-shadow:0 0 40px gold;"></div>
+
   <h1>SSCWC Chess Crypto Kings</h1>
-  <h2>The Future of Gold on Blockchain</h2>
-  <input type="email" placeholder="Your email (for quick sign-in)" />
-  <div><button class="btn btn-pink">Send Magic Link</button></div>
-  <div><button class="btn btn-blue">Connect Wallet (BSC Testnet)</button><button class="btn btn-green">Create Game</button></div>
-  <div><button class="btn btn-gold">🪙 Buy SSCWC on Uniswap</button></div>
-  <p>Not signed in — enter email and click "Send Magic Link"</p>
-  <div id="chessContainer"><div id="board"></div></div>
-  <footer style="margin-top:30px;color:#777;font-size:0.9em;">© 2025 SSC Wealth Coin — All Rights Reserved</footer>
-  <script src="chess.js"></script>
+  <p><i>The Future of Gold on Blockchain</i></p>
+
+  <div id="board"></div>
+  <button id="resetBtn">Reset Game</button>
+
+  <script>
+    window.onload = function() {
+      var board = null
+      var game = new Chess()
+
+      function makeBestMove() {
+        const possibleMoves = game.moves()
+        if (possibleMoves.length === 0) return
+
+        const randomIdx = Math.floor(Math.random() * possibleMoves.length)
+        game.move(possibleMoves[randomIdx])
+        board.position(game.fen())
+      }
+
+      function onDragStart(source, piece) {
+        if (game.game_over() || piece.search(/^b/) !== -1) return false
+      }
+
+      function onDrop(source, target) {
+        const move = game.move({
+          from: source,
+          to: target,
+          promotion: 'q'
+        })
+        if (move === null) return 'snapback'
+        window.setTimeout(makeBestMove, 250)
+      }
+
+      board = Chessboard('board', {
+        draggable: true,
+        position: 'start',
+        onDragStart: onDragStart,
+        onDrop: onDrop
+      })
+
+      document.getElementById("resetBtn").onclick = function() {
+        game.reset()
+        board.start()
+      }
+    }
+  </script>
+
 </body>
 </html>

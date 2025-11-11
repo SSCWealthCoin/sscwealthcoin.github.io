@@ -1,95 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SSCWC Chess Crypto Kings</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/css/chessboard-1.0.0.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard.js/1.0.0/js/chessboard-1.0.0.min.js"></script>
-
   <style>
     body {
-      background: #000;
-      color: gold;
-      font-family: Arial, sans-serif;
-      text-align: center;
       margin: 0;
-      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: #000;
+      color: #fff;
+      text-align: center;
     }
+
+    /* Logo Section */
+    .logo-container {
+      margin-top: 40px;
+      animation: rotateOnce 4s ease-in-out 1, shimmer 3s 4s infinite alternate;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-container img {
+      width: 160px;
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
+    }
+
+    @keyframes rotateOnce {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes shimmer {
+      from { filter: brightness(1) drop-shadow(0 0 15px gold); }
+      to { filter: brightness(1.4) drop-shadow(0 0 25px #ffd700); }
+    }
+
     h1 {
-      color: gold;
+      font-size: 1.6em;
+      color: #ffd700;
       margin-top: 20px;
     }
-    #board {
-      width: 90vw;
-      max-width: 400px;
-      margin: 20px auto;
-      border: 3px solid gold;
-      box-shadow: 0 0 20px gold;
+
+    h2 {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #ffe066;
+      margin-bottom: 30px;
     }
-    button {
-      padding: 10px 20px;
-      margin: 10px;
+
+    .btn {
+      padding: 12px 18px;
+      margin: 8px;
       border: none;
-      background: gold;
-      color: black;
       border-radius: 10px;
-      font-weight: bold;
       cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    .btn-pink { background: #ff42e3; color: white; }
+    .btn-blue { background: #007bff; color: white; }
+    .btn-green { background: #00b853; color: white; }
+    .btn-gold {
+      background: linear-gradient(180deg, #ffea70 0%, #ffcc00 100%);
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+
+    input {
+      padding: 12px;
+      width: 280px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      margin: 8px 0;
+      background: #111;
+      color: #fff;
+      text-align: center;
+    }
+
+    #chessContainer {
+      margin: 50px auto;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle at center, #111 60%, #000 100%);
+      border: 2px solid #ffd700;
+      border-radius: 10px;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.25);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      width: 300px;
+      height: 300px;
+      border: 5px solid #ffd700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+      position: relative;
+    }
+
+    .square {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      user-select: none;
+    }
+
+    .light { background-color: #f9d98b; }
+    .dark { background-color: #946b32; }
+
+    .white-piece { color: #fff8dc; text-shadow: 0 0 10px gold; }
+    .black-piece { color: #3b2c0a; text-shadow: 0 0 10px #d4af37; }
+
+    footer {
+      margin: 40px 0;
+      color: #777;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
+  <div class="logo-container">
+    <!-- Replace this image with your own logo file if desired -->
+    <img src="https://raw.githubusercontent.com/SSCWealthCoin/sscwealthcoin.github.io/main/Gifcmr3XoAA_WF-.jpeg" alt="SSC Wealth Coin Logo">
+  </div>
 
   <h1>SSCWC Chess Crypto Kings</h1>
-  <p><i>The Future of Gold on Blockchain</i></p>
+  <h2>The Future of Gold on Blockchain</h2>
 
-  <div id="board"></div>
-  <button id="resetBtn">Reset Game</button>
+  <input type="email" placeholder="Your email (for quick sign-in)" />
+  <div>
+    <button class="btn btn-pink">Send Magic Link</button>
+  </div>
+  <div>
+    <button class="btn btn-blue">Connect Wallet (BSC Testnet)</button>
+    <button class="btn btn-green">Create Game</button>
+  </div>
+  <div>
+    <button class="btn btn-gold" onclick="window.open('https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447?utm_medium=mobile&utm_source=share-tdp', '_blank')">🪙 Buy SSCWC on Uniswap</button>
+  </div>
+
+  <p>Not signed in — enter email and click "Send Magic Link"</p>
+
+  <div id="chessContainer">
+    <div id="board"></div>
+  </div>
+
+  <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
   <script>
-    window.onload = function() {
-      var board = null
-      var game = new Chess()
+    function buildBoard() {
+      const board = document.getElementById("board");
+      const initial = [
+        ["♜","♞","♝","♛","♚","♝","♞","♜"],
+        ["♟","♟","♟","♟","♟","♟","♟","♟"],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["♙","♙","♙","♙","♙","♙","♙","♙"],
+        ["♖","♘","♗","♕","♔","♗","♘","♖"]
+      ];
 
-      function makeBestMove() {
-        const possibleMoves = game.moves()
-        if (possibleMoves.length === 0) return
-
-        const randomIdx = Math.floor(Math.random() * possibleMoves.length)
-        game.move(possibleMoves[randomIdx])
-        board.position(game.fen())
-      }
-
-      function onDragStart(source, piece) {
-        if (game.game_over() || piece.search(/^b/) !== -1) return false
-      }
-
-      function onDrop(source, target) {
-        const move = game.move({
-          from: source,
-          to: target,
-          promotion: 'q'
-        })
-        if (move === null) return 'snapback'
-        window.setTimeout(makeBestMove, 250)
-      }
-
-      board = Chessboard('board', {
-        draggable: true,
-        position: 'start',
-        onDragStart: onDragStart,
-        onDrop: onDrop
-      })
-
-      document.getElementById("resetBtn").onclick = function() {
-        game.reset()
-        board.start()
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+          const square = document.createElement("div");
+          square.className = "square " + ((row + col) % 2 === 0 ? "light" : "dark");
+          const piece = initial[row][col];
+          if (piece) {
+            const pieceEl = document.createElement("span");
+            pieceEl.innerHTML = piece;
+            pieceEl.className = (row < 2) ? "black-piece" : (row > 5 ? "white-piece" : "");
+            square.appendChild(pieceEl);
+          }
+          board.appendChild(square);
+        }
       }
     }
-  </script>
 
+    document.addEventListener("DOMContentLoaded", buildBoard);
+  </script>
 </body>
 </html>

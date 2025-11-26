@@ -1,186 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SSCWC Chess Crypto Kings</title>
-
-<!-- Chessboard.js CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" />
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSCWC Chess Minimal Test</title>
 <style>
-  body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: #000;
-    color: #fff;
-    text-align: center;
-    padding: 14px;
-  }
-
-  .logo-container {
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: rotateOnce 4s ease-in-out 1, shimmer 3s 4s infinite alternate;
-  }
-  .logo-container img {
-    width: 120px;
-    max-width: 28vw;
-    border-radius: 50%;
-    box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
-  }
-  @keyframes rotateOnce { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
-  @keyframes shimmer { from { filter: brightness(1) drop-shadow(0 0 15px gold);} to { filter: brightness(1.4) drop-shadow(0 0 25px #ffd700);} }
-
-  h1 { font-size: 1.6em; color: #ffd700; margin-top: 12px; margin-bottom: 6px; }
-  h2 { font-size: 1.05em; font-style: italic; color: #ffe066; margin-bottom: 12px; }
-
-  .controls { margin-bottom: 8px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
-  .btn {
-    padding: 10px 14px;
-    margin: 4px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 0.95em;
-    font-weight: 600;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
-  .btn-pink { background: #ff42e3; color: white; }
-  .btn-blue { background: #007bff; color: white; }
-  .btn-green { background: #00b853; color: white; }
-  .btn-gold {
-    background: linear-gradient(180deg, #ffea70 0%, #ffcc00 100%);
-    color: #000;
-    font-weight: bold;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-  }
-
-  input[type="email"] {
-    padding: 10px;
-    width: 300px;
-    max-width: 76vw;
-    border-radius: 8px;
-    border: 1px solid #333;
-    margin: 6px 0;
-    background: #111;
-    color: #fff;
-    text-align: center;
-  }
-
-  #status { color: #ccc; font-size: 0.95rem; margin-top: 8px; min-height: 1.1em; }
-
-  #chessContainer {
-    margin: 18px auto;
-    width: min(480px, 92vw);
-    padding: 10px;
-    border-radius: 10px;
-    background: radial-gradient(circle at center, #111 60%, #000 100%);
-    border: 2px solid #ffd700;
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.22);
-  }
-
-  .white-square { background-color: #f9d98b !important; }
-  .black-square { background-color: #946b32 !important; }
-
-  footer { margin: 12px 0; color: #777; font-size: 0.86em; }
-
-  @media (max-width: 480px) {
-    .logo-container img { width: 96px; }
-    h1 { font-size: 1.3em; }
-    .controls { gap:6px; }
-  }
+  body { margin:0; font-family:sans-serif; background:#000; color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; }
+  #board { display:grid; grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(8,1fr); width:480px; aspect-ratio:1/1; border:4px solid #ffd700; }
+  .square { display:flex; align-items:center; justify-content:center; font-size:2rem; cursor:pointer; }
+  .light { background:#f9d98b; }
+  .dark { background:#946b32; }
+  .white-piece { color:#fff; text-shadow:0 0 6px #d4af37; }
+  .black-piece { color:#111; text-shadow:0 0 6px rgba(0,0,0,0.6); }
+  .highlight { outline:3px solid rgba(255,255,255,0.2); }
+  .move-dot { width:10px; height:10px; border-radius:50%; background:rgba(0,0,0,0.5); }
+  #status { margin:12px; color:#bdf7b8; font-weight:bold; }
 </style>
 </head>
 <body>
 
-<div class="logo-container">
-  <img src="https://raw.githubusercontent.com/SSCWealthCoin/sscwealthcoin.github.io/main/Gifcmr3XoAA_WF-.jpeg" alt="SSC Wealth Coin Logo">
-</div>
+<div id="board"></div>
+<div id="status">Your move — play White.</div>
 
-<h1>SSCWC Chess Crypto Kings</h1>
-<h2>The Future of Gold on Blockchain</h2>
+<script type="module">
+const unicodeMap = {'P':'♙','R':'♖','N':'♘','B':'♗','Q':'♕','K':'♔',
+                    'p':'♟','r':'♜','n':'♞','b':'♝','q':'♛','k':'♚'};
 
-<input id="emailInput" type="email" placeholder="Your email (for quick sign-in)" />
-<div>
-  <button id="sendLinkBtn" class="btn btn-pink">Send Magic Link</button>
-</div>
+let boardState = [
+  ['r','n','b','q','k','b','n','r'],
+  ['p','p','p','p','p','p','p','p'],
+  ['','','','','','','',''],
+  ['','','','','','','',''],
+  ['','','','','','','',''],
+  ['','','','','','','',''],
+  ['P','P','P','P','P','P','P','P'],
+  ['R','N','B','Q','K','B','N','R']
+];
 
-<div class="controls">
-  <button id="connectWalletBtn" class="btn btn-blue">Connect Wallet (BSC Testnet)</button>
-  <button id="createGameBtn" class="btn btn-green">Create Game</button>
-  <button id="buyBtn" class="btn btn-gold" onclick="window.open('https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447?utm_medium=mobile&utm_source=share-tdp','_blank')">🪙 Buy SSCWC on Uniswap</button>
-</div>
+let whiteToMove = true;
+let selected = null;
+let legalMovesCache = [];
+let castlingRights = {white:{K:true,Q:true}, black:{K:true,Q:true}};
+let enPassantTarget = null;
 
-<div id="status">Initializing...</div>
+const boardEl = document.getElementById('board');
 
-<div id="chessContainer">
-  <div id="board" style="width: 100%;"></div>
-</div>
+function inBounds(r,c){ return r>=0 && r<8 && c>=0 && c<8; }
+function cloneBoard(b){ return b.map(row => row.slice()); }
 
-<footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
+function coordToIndex(r,c){ return r*8+c; }
 
-<!-- Chess.js + Chessboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.5/chess.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
-
-<script>
-  const statusEl = document.getElementById('status');
-  let game = new Chess();
-
-  const board = Chessboard('board', {
-    draggable: true,
-    position: 'start',
-    pieceTheme: 'https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/img/chesspieces/wikipedia/{piece}.png',
-    onDragStart: (source, piece, position, orientation) => {
-      if (game.game_over()) return false;
-      if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-          (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-        return false;
-      }
-    },
-    onDrop: (source, target) => {
-      let move = game.move({ from: source, to: target, promotion: 'q' });
-      if (move === null) return 'snapback';
-      updateStatus();
-      setTimeout(runAIMove, 200);
-    },
-    onSnapEnd: () => { board.position(game.fen()); }
-  });
-
-  function updateStatus() {
-    let status = '';
-    if (game.in_checkmate()) status = 'Checkmate!';
-    else if (game.in_draw()) status = 'Draw!';
-    else status = (game.turn() === 'w' ? 'Your move — White' : 'AI thinking...') + (game.in_check() ? ' (Check!)' : '');
-    statusEl.textContent = status;
+function findKing(b,white){ for(let r=0;r<8;r++) for(let c=0;c<8;c++) if(b[r][c]=== (white?'K':'k')) return [r,c]; return null; }
+function isSquareAttacked(b,sr,sc,byWhite){
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++){
+    const p = b[r][c]; if(!p) continue; const isWhite = (p===p.toUpperCase()); if(isWhite!==byWhite) continue;
+    const piece = p.toLowerCase(); const dr=sr-r, dc=sc-c;
+    if(piece==='p'){ const dir=isWhite?-1:1; if(sr===r+dir && Math.abs(dc)===1) return true; }
+    else if(piece==='n'){ if((Math.abs(dr)===2 && Math.abs(dc)===1)||(Math.abs(dr)===1 && Math.abs(dc)===2)) return true; }
+    else if(piece==='b'||piece==='q'){ if(Math.abs(dr)===Math.abs(dc) && dr!==0){ let stepR=dr/Math.abs(dr), stepC=dc/Math.abs(dc), blocked=false; let rr=r+stepR,cc=c+stepC; while(rr!==sr||cc!==sc){ if(b[Math.round(rr)][Math.round(cc)]){blocked=true;break;} rr+=stepR; cc+=stepC;} if(!blocked) return true; } }
+    else if(piece==='r'||piece==='q'){ if(dr===0||dc===0){ let stepR=dr===0?0:dr/Math.abs(dr), stepC=dc===0?0:dc/Math.abs(dc), blocked=false; let rr=r+stepR,cc=c+stepC; while(rr!==sr||cc!==sc){ if(b[Math.round(rr)][Math.round(cc)]){blocked=true;break;} rr+=stepR; cc+=stepC;} if(!blocked) return true; } }
+    else if(piece==='k'){ if(Math.max(Math.abs(dr),Math.abs(dc))===1) return true; }
   }
+  return false;
+}
+function isKingInCheck(b,white){ const king=findKing(b,white); if(!king)return true; return isSquareAttacked(b,king[0],king[1],!white); }
 
-  function runAIMove() {
-    if (game.game_over()) { updateStatus(); return; }
-    let moves = game.moves();
-    if (moves.length === 0) { updateStatus(); return; }
-    // Basic random AI — can be replaced with minimax or Stockfish later
-    const move = moves[Math.floor(Math.random() * moves.length)];
-    game.move(move);
-    board.position(game.fen());
-    updateStatus();
-  }
-
-  updateStatus();
-
-  // Placeholder buttons
-  document.getElementById('connectWalletBtn').addEventListener('click', () => alert('Wallet connect placeholder.'));
-  document.getElementById('createGameBtn').addEventListener('click', () => alert('Create game placeholder.'));
-
-  document.getElementById('sendLinkBtn').addEventListener('click', () => {
-    const email = document.getElementById('emailInput').value.trim();
-    if (!email) { alert('Please enter an email.'); return; }
-    alert('Magic link placeholder — email saved locally: ' + email);
-  });
-</script>
-</body>
-</html>
+function generateMoves(b,whiteTurn){
+  const moves=[];
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++){
+    const p=b[r][c]; if(!p) continue; const isWhite = (p===p.toUpperCase()); if(isWhite!==whiteTurn) continue;
+    const piece=p.toLowerCase();
+    if(piece==='p'){ const dir=isWhite?-1:1, startRow=isWhite?6:1;
+      if(inBounds(r+dir,c) && !b[r+dir][c]) moves.push({from:[r,c],to:[r+dir,c],promote:(r+dir===0||r+dir===7)});
+      if(r===startRow && inBounds(r+2*dir,c) && !b[r+dir][c] && !b[r+2*dir][c]) moves.push({from:[r,c],to:[r+2*dir,c],double:true});
+      for(const dc of [-1,1]){ const nr=r+dir,nc=c+dc; if(inBounds(nr,nc)){ const occ=b[nr][nc]; if(occ){ const occWhite = (occ===occ.toUpperCase()); if(occWhite!==isWhite) moves.push({from:[r,c],to:[nr,nc],capture:true,promote:(nr===0||nr===7)}); } else if(enPassantTarget && enPassantTarget[0]===nr && enPassantTarget[1]===nc) moves.push({from:[r,c],to:[nr,nc],enPassant:true,capture:true}); } } }
+    } else if(piece==='n'){ [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]].forEach(([dr,dc])=>{ let nr=r+dr,nc=c+dc; if(inBounds(nr,nc)){ const occ=b[nr][nc]; if(!occ || (occ.toUpperCase()!==p.toUpperCase())) moves.push({from:[r,c],to:[nr,nc],capture:!!occ}); } }); }
+    else if(piece==='b'||piece==='r'||piece==='q'){
+      const directions=[]; if(piece==='b'||piece==='q') directions.push([-1,-1],[-1,1],[1,-1],[1,1]); if(piece==='r'||piece==='q') directions.push([-1,0],[1,0],[0,-1],[0,1]);
+      directions.forEach(([dr,dc])=>{ let nr=r+dr,nc=c+dc; while(inBounds(nr,nc

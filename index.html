@@ -64,14 +64,24 @@
     <div id="board" aria-label="Chess board"></div>
   </div>
 
+  <!-- Live Match Lobby -->
+  <div id="matchLobbyContainer" style="margin:20px auto; max-width:400px; text-align:left;">
+    <h3 style="color:#ffd700; margin-bottom:6px;">Live Match Lobby</h3>
+    <ul id="matchLobbyList" style="list-style:none; padding:0; margin:0; color:#fff; font-size:0.95rem;">
+      <li style="color:#777;">No active matches</li>
+    </ul>
+  </div>
+
   <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
   <!-- Ethers.js (v6) -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.min.js"></script>
-  <!-- Firebase modular SDK -->
+
+  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCiU4bLmbd5pJ6sv13TAMIk4eh8Exhid4o",
@@ -85,10 +95,13 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getDatabase(app);
+    const matchRef = ref(db, 'matches');
 
     const emailInput = document.getElementById('emailInput');
     const sendLinkBtn = document.getElementById('sendLinkBtn');
     const statusEl = document.getElementById('status');
+    const matchLobbyList = document.getElementById('matchLobbyList');
 
     const actionCodeSettings = { url: window.location.href, handleCodeInApp: true };
 
@@ -120,9 +133,63 @@
       if (user) { statusEl.textContent = 'Signed in as: ' + (user.email || 'anonymous'); statusEl.style.color = '#bdf7b8'; }
       else { statusEl.textContent = 'Not signed in — enter email and click "Send Magic Link"'; statusEl.style.color='#ccc'; }
     });
+
+    // Live Lobby Updates
+    onValue(matchRef, snapshot => {
+      const matches = snapshot.val();
+      matchLobbyList.innerHTML = '';
+      if (matches) {
+        Object.keys(matches).forEach(key => {
+          const match = matches[key];
+          const li = document.createElement('li');
+          li.style.padding = '6px 4px';
+          li.style.borderBottom = '1px solid #444';
+          li.textContent = `Player: ${match.player || 'Anonymous'} | Stake: $${match.stake} | Status: ${match.status}`;
+          matchLobbyList.appendChild(li);
+        });
+      } else {
+        const li = document.createElement('li');
+        li.style.color = '#777';
+        li.textContent = 'No active matches';
+        matchLobbyList.appendChild(li);
+      }
+    });
+
+    // Match functions
+    window.createMatch = async (stakeAmount = 1) => {
+      const user = auth.currentUser;
+      if (!user) { alert('Sign in first!'); return; }
+      const newMatchRef = push(matchRef);
+      await newMatchRef.set({
+        player: user.email || 'Anonymous',
+        stake: stakeAmount,
+        status: 'waiting'
+      });
+      alert('Match created! Waiting for opponent...');
+    };
+
+    window.acceptMatch = async () => {
+      const user = auth.currentUser;
+      if (!user) { alert('Sign in first!'); return; }
+      onValue(matchRef, snapshot => {
+        const matches = snapshot.val();
+        if (matches) {
+          const firstWaitingKey = Object.keys(matches).find(key => matches[key].status === 'waiting' && matches[key].player !== user.email);
+          if (firstWaitingKey) {
+            const matchPath = ref(db, `matches/${firstWaitingKey}`);
+            matchPath.update({ status: 'accepted', opponent: user.email });
+            alert(`Joined match with ${matches[firstWaitingKey].player}`);
+          } else {
+            alert('No available matches at the moment.');
+          }
+        } else {
+          alert('No matches found.');
+        }
+      }, { onlyOnce: true });
+    };
   </script>
 
-  <!-- Core chess + AI script -->
+  <!-- Core chess + AI -->
   <script type="module">
     import './chess.js';
   </script>
@@ -133,7 +200,7 @@
   <!-- Wire up buttons to Web3 -->
   <script>
     document.getElementById("connectWalletBtn").onclick = () => connectWallet();
-    document.getElementById("createMatchBtn").onclick = () => createMatch(1); // $1 stake
+    document.getElementById("createMatchBtn").onclick = () => createMatch(1);
     document.getElementById("acceptMatchBtn").onclick = () => acceptMatch();
   </script>
 </body>

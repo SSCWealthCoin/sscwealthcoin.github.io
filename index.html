@@ -10,27 +10,61 @@
     .logo-container img{ width:140px;border-radius:50%;box-shadow:0 0 60px rgba(255,215,0,0.6);}    
     h1{color:#ffd700;margin:12px 0;font-size:1.5rem}
     h2{color:#ffe066;margin:0 0 18px;font-size:1.05rem;font-style:italic}
+
     .controls{margin:12px 0;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
     .btn{padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600}
     .btn-pink{background:#ff42e3;color:#fff}
     .btn-blue{background:#007bff;color:#fff}
     .btn-green{background:#00b853;color:#fff}
     .btn-gold{background:linear-gradient(180deg,#ffea70 0%,#ffcc00 100%);color:#000}
+
     input[type=email]{padding:10px;width:260px;border-radius:8px;border:1px solid #333;background:#111;color:#fff;text-align:center}
     select{padding:10px;border-radius:8px;background:#111;color:#fff;border:1px solid #333}
+
     #status{color:#ccc;margin-top:8px}
+
+    /* Chess Container */
     #chessContainer{margin:20px auto;width:320px;height:320px;background:radial-gradient(circle at center,#111 60%,#000 100%);border:2px solid #ffd700;border-radius:10px;box-shadow:0 0 40px rgba(255,215,0,0.25);display:flex;justify-content:center;align-items:center;padding:10px}
     #board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:300px;height:300px;border:5px solid #ffd700;box-shadow:0 0 30px rgba(255,215,0,0.3);user-select:none}
     .square{display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer}
-    .light{background:#f9d98b}.dark{background:#946b32}
+    .light{background:#f9d98b}
+    .dark{background:#946b32}
     .white-piece{color:#111;text-shadow:0 0 6px gold;font-weight:700}
     .black-piece{color:#000;opacity:0.95;text-shadow:0 0 6px #d4af37}
     .highlight{outline:3px solid rgba(255,255,255,0.25);box-shadow:inset 0 0 8px rgba(255,255,255,0.06)}
     .move-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,0.5);box-shadow:0 0 6px rgba(0,0,0,0.3)}
+
+    /* Live Match Panel */
+    #matchPanel{
+      width:90%;
+      max-width:500px;
+      margin:25px auto;
+      padding:15px;
+      background:#111;
+      border:1px solid #444;
+      border-radius:12px;
+      box-shadow:0 0 20px rgba(255,215,0,0.1);
+    }
+    #matchPanel h3{margin:0 0 12px;color:#ffd700}
+    #matchesList p{
+      background:#222;
+      padding:8px;
+      border-radius:8px;
+      border:1px solid #333;
+      margin:6px 0;
+      font-size:0.9rem;
+    }
+
     footer{margin:18px 0;color:#777;font-size:0.9em}
-    @media (max-width:480px){#chessContainer{width:260px;height:260px}#board{width:240px;height:240px}input[type=email]{width:200px}}
+
+    @media (max-width:480px){
+      #chessContainer{width:260px;height:260px}
+      #board{width:240px;height:240px}
+      input[type=email]{width:200px}
+    }
   </style>
 </head>
+
 <body>
   <div class="logo-container">
     <img src="https://raw.githubusercontent.com/SSCWealthCoin/sscwealthcoin.github.io/main/Gifcmr3XoAA_WF-.jpeg" alt="SSC Wealth Coin Logo">
@@ -39,49 +73,61 @@
   <h1>SSCWC Chess Crypto Kings</h1>
   <h2>The Future of Gold on Blockchain</h2>
 
+  <!-- Email login & AI selector -->
   <div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:6px">
     <input id="emailInput" type="email" placeholder="Your email (for quick sign-in)" />
     <button id="sendLinkBtn" class="btn btn-pink">Send Magic Link</button>
+
     <select id="aiDepthSelect" title="AI strength">
       <option value="1">AI Depth 1 (easy)</option>
       <option value="2">AI Depth 2 (medium)</option>
       <option value="3" selected>AI Depth 3 (hard)</option>
       <option value="4">AI Depth 4 (very hard)</option>
     </select>
+
     <button id="restartBtn" class="btn">Restart</button>
   </div>
 
+  <!-- Web3 Buttons -->
   <div class="controls">
     <button id="connectWalletBtn" class="btn btn-blue">Connect Wallet (MetaMask)</button>
     <button id="createMatchBtn" class="btn btn-green">Create Match (stake)</button>
     <button id="acceptMatchBtn" class="btn btn-green">Accept Match</button>
-    <button id="buyBtn" class="btn btn-gold" onclick="window.open('https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447','_blank')">🪙 Buy SSCWC on Uniswap</button>
+    <button id="buyBtn" class="btn btn-gold"
+      onclick="window.open('https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447','_blank')">
+      🪙 Buy SSCWC on Uniswap
+    </button>
   </div>
 
   <div id="status">Not signed in — enter email and click "Send Magic Link"</div>
 
+  <!-- 🔥 LIVE MATCH PANEL -->
+  <div id="matchPanel">
+    <h3>🟡 Live Match Lobby</h3>
+    <div id="matchesList">Loading matches...</div>
+  </div>
+
+  <!-- Chess Board -->
   <div id="chessContainer">
     <div id="board" aria-label="Chess board"></div>
   </div>
 
-  <!-- Live Match Lobby -->
-  <div id="matchLobbyContainer" style="margin:20px auto; max-width:400px; text-align:left;">
-    <h3 style="color:#ffd700; margin-bottom:6px;">Live Match Lobby</h3>
-    <ul id="matchLobbyList" style="list-style:none; padding:0; margin:0; color:#fff; font-size:0.95rem;">
-      <li style="color:#777;">No active matches</li>
-    </ul>
-  </div>
-
   <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
-  <!-- Ethers.js (v6) -->
+  <!-- Ethers.js -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.min.js"></script>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase X Web3 X Chess -->
   <script type="module">
+    /* ================= FIREBASE SETUP ================= */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+    import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink,
+             signInWithEmailLink, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+    import {
+      getDatabase, ref, set, push, onValue
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCiU4bLmbd5pJ6sv13TAMIk4eh8Exhid4o",
@@ -94,114 +140,106 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
     const db = getDatabase(app);
-    const matchRef = ref(db, 'matches');
+    const auth = getAuth(app);
 
-    const emailInput = document.getElementById('emailInput');
-    const sendLinkBtn = document.getElementById('sendLinkBtn');
-    const statusEl = document.getElementById('status');
-    const matchLobbyList = document.getElementById('matchLobbyList');
+    const statusEl = document.getElementById("status");
+    const matchesList = document.getElementById("matchesList");
 
+    /* ============ EMAIL MAGIC LINK AUTH ============ */
+    const emailInput = document.getElementById("emailInput");
+    const sendLinkBtn = document.getElementById("sendLinkBtn");
     const actionCodeSettings = { url: window.location.href, handleCodeInApp: true };
 
-    sendLinkBtn.addEventListener('click', async () => {
-      const email = (emailInput.value||'').trim();
-      if (!email) { alert('Please enter an email.'); return; }
+    sendLinkBtn.onclick = async () => {
+      const email = emailInput.value.trim();
+      if (!email) return alert("Enter an email!");
       try {
         await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-        window.localStorage.setItem('emailForSignIn', email);
-        alert('Magic link sent — check your email.');
-      } catch (err) { console.error(err); alert('Error sending magic link: ' + (err.message||err)); }
-    });
+        localStorage.setItem("emailForSignIn", email);
+        alert("Magic link sent — check your inbox.");
+      } catch (e) { alert("Error: " + e.message); }
+    };
 
-    window.addEventListener('load', async ()=> {
-      try {
-        if (isSignInWithEmailLink(auth, window.location.href)) {
-          let email = window.localStorage.getItem('emailForSignIn');
-          if (!email) email = window.prompt('Please provide the email you used to sign in:');
-          if (email) {
-            await signInWithEmailLink(auth, email, window.location.href);
-            window.localStorage.removeItem('emailForSignIn');
-            try { history.replaceState(null,'',window.location.pathname); } catch(e){}
-          }
-        }
-      } catch(e) { console.error('Error completing sign-in', e); }
-    });
-
-    onAuthStateChanged(auth, user => {
-      if (user) { statusEl.textContent = 'Signed in as: ' + (user.email || 'anonymous'); statusEl.style.color = '#bdf7b8'; }
-      else { statusEl.textContent = 'Not signed in — enter email and click "Send Magic Link"'; statusEl.style.color='#ccc'; }
-    });
-
-    // Live Lobby Updates
-    onValue(matchRef, snapshot => {
-      const matches = snapshot.val();
-      matchLobbyList.innerHTML = '';
-      if (matches) {
-        Object.keys(matches).forEach(key => {
-          const match = matches[key];
-          const li = document.createElement('li');
-          li.style.padding = '6px 4px';
-          li.style.borderBottom = '1px solid #444';
-          li.textContent = `Player: ${match.player || 'Anonymous'} | Stake: $${match.stake} | Status: ${match.status}`;
-          matchLobbyList.appendChild(li);
-        });
-      } else {
-        const li = document.createElement('li');
-        li.style.color = '#777';
-        li.textContent = 'No active matches';
-        matchLobbyList.appendChild(li);
+    window.addEventListener("load", async () => {
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        let email = localStorage.getItem("emailForSignIn");
+        if (!email) email = prompt("Enter the email you used:");
+        await signInWithEmailLink(auth, email, window.location.href);
+        localStorage.removeItem("emailForSignIn");
       }
     });
 
-    // Match functions
-    window.createMatch = async (stakeAmount = 1) => {
-      const user = auth.currentUser;
-      if (!user) { alert('Sign in first!'); return; }
-      const newMatchRef = push(matchRef);
-      await newMatchRef.set({
-        player: user.email || 'Anonymous',
-        stake: stakeAmount,
-        status: 'waiting'
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        statusEl.textContent = "Signed in as: " + user.email;
+        statusEl.style.color = "#bdf7b8";
+      } else {
+        statusEl.textContent = "Not signed in — enter email & click link";
+        statusEl.style.color = "#ccc";
+      }
+    });
+
+    /* ============ LIVE MATCH LOBBY ============ */
+    const matchesRef = ref(db, "matches/");
+
+    onValue(matchesRef, snapshot => {
+      const data = snapshot.val();
+      if (!data) {
+        matchesList.innerHTML = "<p>No active matches</p>";
+        return;
+      }
+
+      matchesList.innerHTML = "";
+      Object.entries(data).forEach(([id, match]) => {
+        matchesList.innerHTML += `
+          <p>
+            <strong>ID:</strong> ${id}<br>
+            <strong>Stake:</strong> ${match.stake} SSCWC<br>
+            <strong>Status:</strong> ${match.status}<br>
+            <strong>Creator:</strong> ${match.creator || "unknown"}
+          </p>
+        `;
       });
-      alert('Match created! Waiting for opponent...');
-    };
+    });
 
-    window.acceptMatch = async () => {
+    /* ============ MATCH CREATION HELPERS ============ */
+    window.createMatch = async function(stake){
       const user = auth.currentUser;
-      if (!user) { alert('Sign in first!'); return; }
-      onValue(matchRef, snapshot => {
-        const matches = snapshot.val();
-        if (matches) {
-          const firstWaitingKey = Object.keys(matches).find(key => matches[key].status === 'waiting' && matches[key].player !== user.email);
-          if (firstWaitingKey) {
-            const matchPath = ref(db, `matches/${firstWaitingKey}`);
-            matchPath.update({ status: 'accepted', opponent: user.email });
-            alert(`Joined match with ${matches[firstWaitingKey].player}`);
-          } else {
-            alert('No available matches at the moment.');
-          }
-        } else {
-          alert('No matches found.');
-        }
-      }, { onlyOnce: true });
+      if (!user) return alert("Sign in first.");
+
+      const matchRef = push(matchesRef);
+      await set(matchRef, {
+        stake,
+        status: "waiting",
+        creator: user.email,
+        timestamp: Date.now()
+      });
+
+      alert("Match created! It now appears in the Live Lobby.");
     };
+
+    window.acceptMatch = async function(){
+      alert("Accept match functionality connected to Firebase & Web3-integration.js");
+    };
+
   </script>
 
-  <!-- Core chess + AI -->
+  <!-- Chess engine -->
   <script type="module">
-    import './chess.js';
+    import "./chess.js";
   </script>
 
-  <!-- Web3 integration -->
-  <script type="module" src="./web3-integration.js"></script>
+  <!-- Web3 buttons -->
+  <script type="module">
+    import "./web3-integration.js";
+  </script>
 
-  <!-- Wire up buttons to Web3 -->
   <script>
     document.getElementById("connectWalletBtn").onclick = () => connectWallet();
     document.getElementById("createMatchBtn").onclick = () => createMatch(1);
     document.getElementById("acceptMatchBtn").onclick = () => acceptMatch();
   </script>
+
 </body>
 </html>

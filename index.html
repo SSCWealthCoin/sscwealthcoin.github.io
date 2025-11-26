@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SSCWC Chess Crypto Kings — Live</title>
   <style>
-    /* (same polished CSS as earlier) */
     body { margin:0; font-family:"Poppins",sans-serif; background:#000; color:#fff; text-align:center; }
     .logo-container{ margin-top:28px; display:flex;justify-content:center;align-items:center; }
     .logo-container img{ width:140px;border-radius:50%;box-shadow:0 0 60px rgba(255,215,0,0.6);}    
@@ -87,7 +86,6 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Wire up magic link UI
     const emailInput = document.getElementById('emailInput');
     const sendLinkBtn = document.getElementById('sendLinkBtn');
     const statusEl = document.getElementById('status');
@@ -120,17 +118,23 @@
 
     onAuthStateChanged(auth, user => {
       if (user) { statusEl.textContent = 'Signed in as: ' + (user.email || 'anonymous'); statusEl.style.color = '#bdf7b8'; }
-      else { statusEl.textContent = 'Not signed in — enter email and click \"Send Magic Link\"'; statusEl.style.color='#ccc'; }
+      else { statusEl.textContent = 'Not signed in — enter email and click "Send Magic Link"'; statusEl.style.color='#ccc'; }
     });
   </script>
 
-  <!-- Core chess + AI script (keeps using your chess.js from repo if present) -->
+  <!-- Core chess + AI script -->
   <script type="module">
-    // If you already have a `chess.js` in root, it will be loaded here; otherwise the minimal engine inlined below will be used.
     import './chess.js';
   </script>
 
-  <!-- Web3 integration (front-end helpers). See /web3-integration.js for full code -->
+  <!-- Web3 integration -->
   <script type="module" src="./web3-integration.js"></script>
+
+  <!-- Wire up buttons to Web3 -->
+  <script>
+    document.getElementById("connectWalletBtn").onclick = () => connectWallet();
+    document.getElementById("createMatchBtn").onclick = () => createMatch(1); // $1 stake
+    document.getElementById("acceptMatchBtn").onclick = () => acceptMatch();
+  </script>
 </body>
 </html>

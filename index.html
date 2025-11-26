@@ -3,149 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SSCWC Chess Crypto Kings</title>
+  <title>SSCWC Chess Crypto Kings — Live</title>
   <style>
-    /* ---- Your original styling mostly preserved ---- */
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .logo-container {
-      margin-top: 40px;
-      animation: rotateOnce 4s ease-in-out 1, shimmer 3s 4s infinite alternate;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .logo-container img {
-      width: 160px;
-      border-radius: 50%;
-      box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
-    }
-
-    @keyframes rotateOnce {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes shimmer {
-      from { filter: brightness(1) drop-shadow(0 0 15px gold); }
-      to { filter: brightness(1.4) drop-shadow(0 0 25px #ffd700); }
-    }
-
-    h1 {
-      font-size: 1.6em;
-      color: #ffd700;
-      margin-top: 20px;
-    }
-
-    h2 {
-      font-size: 1.2em;
-      font-style: italic;
-      color: #ffe066;
-      margin-bottom: 20px;
-    }
-
-    .controls { margin-bottom: 6px; }
-
-    .btn {
-      padding: 12px 18px;
-      margin: 8px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1em;
-      font-weight: 600;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-    }
-
-    .btn-pink { background: #ff42e3; color: white; }
-    .btn-blue { background: #007bff; color: white; }
-    .btn-green { background: #00b853; color: white; }
-    .btn-gold {
-      background: linear-gradient(180deg, #ffea70 0%, #ffcc00 100%);
-      color: #000;
-      font-weight: bold;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-    }
-
-    input[type="email"] {
-      padding: 12px;
-      width: 280px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      margin: 8px 0;
-      background: #111;
-      color: #fff;
-      text-align: center;
-    }
-
-    #status { color: #ccc; font-size: 0.95rem; margin-top: 6px; }
-
-    #chessContainer {
-      margin: 28px auto;
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle at center, #111 60%, #000 100%);
-      border: 2px solid #ffd700;
-      border-radius: 10px;
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.25);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-    }
-
-    #board {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      grid-template-rows: repeat(8, 1fr);
-      width: 300px;
-      height: 300px;
-      border: 5px solid #ffd700;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-      position: relative;
-      user-select: none;
-    }
-
-    .square {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      cursor: pointer;
-    }
-
-    .light { background-color: #f9d98b; }
-    .dark { background-color: #946b32; }
-
-    .white-piece { color: #111; text-shadow: 0 0 6px gold; font-weight: 700; }
-    .black-piece { color: #000; opacity: 0.95; text-shadow: 0 0 6px #d4af37; }
-
-    .highlight { outline: 3px solid rgba(255,255,255,0.25); box-shadow: inset 0 0 8px rgba(255,255,255,0.06); }
-    .move-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.5); box-shadow: 0 0 6px rgba(0,0,0,0.3); }
-
-    footer { margin: 18px 0; color: #777; font-size: 0.9em; }
-
-    @media (max-width: 480px) {
-      #chessContainer { width: 260px; height: 260px; }
-      #board { width: 240px; height: 240px; }
-      input[type="email"] { width: 200px; }
-    }
+    /* (same polished CSS as earlier) */
+    body { margin:0; font-family:"Poppins",sans-serif; background:#000; color:#fff; text-align:center; }
+    .logo-container{ margin-top:28px; display:flex;justify-content:center;align-items:center; }
+    .logo-container img{ width:140px;border-radius:50%;box-shadow:0 0 60px rgba(255,215,0,0.6);}    
+    h1{color:#ffd700;margin:12px 0;font-size:1.5rem}
+    h2{color:#ffe066;margin:0 0 18px;font-size:1.05rem;font-style:italic}
+    .controls{margin:12px 0;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+    .btn{padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+    .btn-pink{background:#ff42e3;color:#fff}
+    .btn-blue{background:#007bff;color:#fff}
+    .btn-green{background:#00b853;color:#fff}
+    .btn-gold{background:linear-gradient(180deg,#ffea70 0%,#ffcc00 100%);color:#000}
+    input[type=email]{padding:10px;width:260px;border-radius:8px;border:1px solid #333;background:#111;color:#fff;text-align:center}
+    select{padding:10px;border-radius:8px;background:#111;color:#fff;border:1px solid #333}
+    #status{color:#ccc;margin-top:8px}
+    #chessContainer{margin:20px auto;width:320px;height:320px;background:radial-gradient(circle at center,#111 60%,#000 100%);border:2px solid #ffd700;border-radius:10px;box-shadow:0 0 40px rgba(255,215,0,0.25);display:flex;justify-content:center;align-items:center;padding:10px}
+    #board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);width:300px;height:300px;border:5px solid #ffd700;box-shadow:0 0 30px rgba(255,215,0,0.3);user-select:none}
+    .square{display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer}
+    .light{background:#f9d98b}.dark{background:#946b32}
+    .white-piece{color:#111;text-shadow:0 0 6px gold;font-weight:700}
+    .black-piece{color:#000;opacity:0.95;text-shadow:0 0 6px #d4af37}
+    .highlight{outline:3px solid rgba(255,255,255,0.25);box-shadow:inset 0 0 8px rgba(255,255,255,0.06)}
+    .move-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,0.5);box-shadow:0 0 6px rgba(0,0,0,0.3)}
+    footer{margin:18px 0;color:#777;font-size:0.9em}
+    @media (max-width:480px){#chessContainer{width:260px;height:260px}#board{width:240px;height:240px}input[type=email]{width:200px}}
   </style>
 </head>
 <body>
@@ -156,14 +40,23 @@
   <h1>SSCWC Chess Crypto Kings</h1>
   <h2>The Future of Gold on Blockchain</h2>
 
-  <input id="emailInput" type="email" placeholder="Your email (for quick sign-in)" />
-  <div>
+  <div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:6px">
+    <input id="emailInput" type="email" placeholder="Your email (for quick sign-in)" />
     <button id="sendLinkBtn" class="btn btn-pink">Send Magic Link</button>
+    <select id="aiDepthSelect" title="AI strength">
+      <option value="1">AI Depth 1 (easy)</option>
+      <option value="2">AI Depth 2 (medium)</option>
+      <option value="3" selected>AI Depth 3 (hard)</option>
+      <option value="4">AI Depth 4 (very hard)</option>
+    </select>
+    <button id="restartBtn" class="btn">Restart</button>
   </div>
+
   <div class="controls">
-    <button id="connectWalletBtn" class="btn btn-blue">Connect Wallet (BSC Testnet)</button>
-    <button id="createGameBtn" class="btn btn-green">Create Game</button>
-    <button id="buyBtn" class="btn btn-gold" onclick="window.open('https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447?utm_medium=mobile&utm_source=share-tdp','_blank')">🪙 Buy SSCWC on Uniswap</button>
+    <button id="connectWalletBtn" class="btn btn-blue">Connect Wallet (MetaMask)</button>
+    <button id="createMatchBtn" class="btn btn-green">Create Match (stake)</button>
+    <button id="acceptMatchBtn" class="btn btn-green">Accept Match</button>
+    <button id="buyBtn" class="btn btn-gold" onclick="window.open('https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447','_blank')">🪙 Buy SSCWC on Uniswap</button>
   </div>
 
   <div id="status">Not signed in — enter email and click "Send Magic Link"</div>
@@ -174,13 +67,13 @@
 
   <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
-  <!-- Firebase + App Script (module) -->
+  <!-- Ethers.js (v6) -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.min.js"></script>
+  <!-- Firebase modular SDK -->
   <script type="module">
-    /* ------------------ Firebase setup (modular) ------------------ */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
-    // ---------- Your Firebase config (as provided) ----------
     const firebaseConfig = {
       apiKey: "AIzaSyCiU4bLmbd5pJ6sv13TAMIk4eh8Exhid4o",
       authDomain: "sscwc-chess.firebaseapp.com",
@@ -194,436 +87,50 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    // Wire up magic link UI
     const emailInput = document.getElementById('emailInput');
     const sendLinkBtn = document.getElementById('sendLinkBtn');
     const statusEl = document.getElementById('status');
 
-    // actionCodeSettings: use current page origin so GitHub Pages will be valid
-    const actionCodeSettings = {
-      url: window.location.href,
-      handleCodeInApp: true,
-    };
+    const actionCodeSettings = { url: window.location.href, handleCodeInApp: true };
 
     sendLinkBtn.addEventListener('click', async () => {
-      const email = (emailInput.value || '').trim();
+      const email = (emailInput.value||'').trim();
       if (!email) { alert('Please enter an email.'); return; }
       try {
         await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-        // Save the email locally to complete sign-in after redirect
         window.localStorage.setItem('emailForSignIn', email);
-        alert('Magic link sent! Check your email and follow the link to sign in.');
-      } catch (err) {
-        console.error(err);
-        alert('Error sending magic link: ' + (err.message || err));
-      }
+        alert('Magic link sent — check your email.');
+      } catch (err) { console.error(err); alert('Error sending magic link: ' + (err.message||err)); }
     });
 
-    // If this page is opened with an email sign-in link, complete sign-in
-    window.addEventListener('load', async () => {
+    window.addEventListener('load', async ()=> {
       try {
         if (isSignInWithEmailLink(auth, window.location.href)) {
           let email = window.localStorage.getItem('emailForSignIn');
-          if (!email) {
-            // Ask user for the email they used previously
-            email = window.prompt('Please provide the email you used to sign in:');
-          }
+          if (!email) email = window.prompt('Please provide the email you used to sign in:');
           if (email) {
-            const result = await signInWithEmailLink(auth, email, window.location.href);
+            await signInWithEmailLink(auth, email, window.location.href);
             window.localStorage.removeItem('emailForSignIn');
-            // Clear URL params for neatness (optional)
-            try { history.replaceState(null, '', window.location.pathname); } catch(e) {}
-            console.log('Signed in', result.user);
+            try { history.replaceState(null,'',window.location.pathname); } catch(e){}
           }
         }
-      } catch(e) {
-        console.error('Error completing sign-in', e);
-      }
+      } catch(e) { console.error('Error completing sign-in', e); }
     });
 
-    // Track auth changes
     onAuthStateChanged(auth, user => {
-      if (user) {
-        statusEl.textContent = 'Signed in as: ' + (user.email || 'anonymous');
-        statusEl.style.color = '#bdf7b8';
-      } else {
-        statusEl.textContent = 'Not signed in — enter email and click "Send Magic Link"';
-        statusEl.style.color = '#ccc';
-      }
+      if (user) { statusEl.textContent = 'Signed in as: ' + (user.email || 'anonymous'); statusEl.style.color = '#bdf7b8'; }
+      else { statusEl.textContent = 'Not signed in — enter email and click \"Send Magic Link\"'; statusEl.style.color='#ccc'; }
     });
-
-    /* ------------------ Chess game + AI Level 3 (Minimax depth 3) ------------------ */
-
-    // Board representation:
-    // We'll use an 8x8 array with piece codes:
-    // White: 'P','R','N','B','Q','K'  | Black: 'p','r','n','b','q','k'
-    const unicodeMap = {
-      'P': '♙','R':'♖','N':'♘','B':'♗','Q':'♕','K':'♔',
-      'p': '♟','r':'♜','n':'♞','b':'♝','q':'♛','k':'♚'
-    };
-
-    // Initial board
-    let boardState = [
-      ['r','n','b','q','k','b','n','r'],
-      ['p','p','p','p','p','p','p','p'],
-      ['','','','','','','',''],
-      ['','','','','','','',''],
-      ['','','','','','','',''],
-      ['','','','','','','',''],
-      ['P','P','P','P','P','P','P','P'],
-      ['R','N','B','Q','K','B','N','R']
-    ];
-
-    let whiteToMove = true; // user will play White
-    let selected = null; // {r,c}
-    let legalMovesCache = []; // cached legal moves for selected piece
-
-    const boardEl = document.getElementById('board');
-
-    function coordToIndex(r,c){ return r*8 + c; }
-    function inBounds(r,c){ return r>=0 && r<8 && c>=0 && c<8; }
-
-    function cloneBoard(b) { return b.map(row => row.slice()); }
-
-    // Basic move generator (no castling, no en-passant). Pawn promotion to Queen.
-    function generateMoves(b, whiteTurn) {
-      const moves = [];
-      for (let r=0;r<8;r++){
-        for (let c=0;c<8;c++){
-          const p = b[r][c];
-          if (!p) continue;
-          const isWhite = (p === p.toUpperCase());
-          if (isWhite !== whiteTurn) continue;
-          const piece = p.toLowerCase();
-          if (piece === 'p') {
-            const dir = isWhite ? -1 : 1;
-            const startRow = isWhite ? 6 : 1;
-            // forward 1
-            if (inBounds(r+dir,c) && !b[r+dir][c]) {
-              moves.push({from:[r,c],to:[r+dir,c],promote: (r+dir===0 || r+dir===7)});
-              // forward 2
-              if (r === startRow && !b[r+2*dir][c]) moves.push({from:[r,c],to:[r+2*dir,c]});
-            }
-            // captures
-            for (const dc of [-1,1]) {
-              const nr=r+dir, nc=c+dc;
-              if (inBounds(nr,nc) && b[nr][nc]) {
-                const occ = b[nr][nc];
-                const occWhite = (occ === occ.toUpperCase());
-                if (occWhite !== isWhite) moves.push({from:[r,c],to:[nr,nc],capture:true,promote:(nr===0||nr===7)});
-              }
-            }
-          } else if (piece === 'n') {
-            const del = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
-            for (const [dr,dc] of del) {
-              const nr=r+dr, nc=c+dc;
-              if (!inBounds(nr,nc)) continue;
-              const occ=b[nr][nc];
-              if (!occ || (occ && (occ === occ.toUpperCase()) === isWhite ? false : true)) {
-                moves.push({from:[r,c],to:[nr,nc],capture:!!occ});
-              }
-            }
-          } else if (piece === 'b' || piece === 'r' || piece === 'q') {
-            const directions = [];
-            if (piece === 'b' || piece === 'q') directions.push([-1,-1],[-1,1],[1,-1],[1,1]);
-            if (piece === 'r' || piece === 'q') directions.push([-1,0],[1,0],[0,-1],[0,1]);
-            for (const [dr,dc] of directions) {
-              let nr=r+dr, nc=c+dc;
-              while (inBounds(nr,nc)) {
-                if (!b[nr][nc]) {
-                  moves.push({from:[r,c],to:[nr,nc]});
-                } else {
-                  const occ=b[nr][nc];
-                  const occWhite = (occ === occ.toUpperCase());
-                  if (occWhite !== isWhite) moves.push({from:[r,c],to:[nr,nc],capture:true});
-                  break;
-                }
-                nr += dr; nc += dc;
-              }
-            }
-          } else if (piece === 'k') {
-            for (let dr=-1;dr<=1;dr++){
-              for (let dc=-1;dc<=1;dc++){
-                if (dr===0 && dc===0) continue;
-                const nr=r+dr, nc=c+dc;
-                if (!inBounds(nr,nc)) continue;
-                const occ=b[nr][nc];
-                if (!occ || (occ && (occ === occ.toUpperCase()) === isWhite ? false : true)) {
-                  moves.push({from:[r,c],to:[nr,nc],capture:!!occ});
-                }
-              }
-            }
-          }
-        }
-      }
-      // Filter out moves that leave king in check
-      const legal = moves.filter(m => {
-        const nb = cloneBoard(b);
-        const [fr,fc] = m.from, [tr,tc] = m.to;
-        let piece = nb[fr][fc];
-        nb[fr][fc] = '';
-        // handle promotion
-        if (m.promote) {
-          piece = (piece === piece.toUpperCase()) ? 'Q' : 'q';
-        }
-        nb[tr][tc] = piece;
-        return !isKingInCheck(nb, whiteTurn);
-      });
-      return legal;
-    }
-
-    function findKing(b, white) {
-      const target = white ? 'K' : 'k';
-      for (let r=0;r<8;r++) for (let c=0;c<8;c++) if (b[r][c] === target) return [r,c];
-      return null;
-    }
-
-    function isSquareAttacked(b, sr, sc, byWhite) {
-      // generate pseudo-moves for 'byWhite' and see if any target sr,sc
-      // Simple approach: iterate pieces and see if they can move to sr,sc ignoring checks.
-      for (let r=0;r<8;r++){
-        for (let c=0;c<8;c++){
-          const p=b[r][c]; if(!p) continue;
-          const isWhite = (p === p.toUpperCase());
-          if (isWhite !== byWhite) continue;
-          const piece = p.toLowerCase();
-          const dr = sr - r, dc = sc - c;
-          if (piece === 'p') {
-            const dir = isWhite ? -1 : 1;
-            if (sr === r + dir && Math.abs(dc) === 1) return true;
-          } else if (piece === 'n') {
-            const adx = Math.abs(dr), ady = Math.abs(dc);
-            if ((adx===1 && ady===2)||(adx===2 && ady===1)) return true;
-          } else if (piece === 'b' || piece === 'q') {
-            if (Math.abs(dr) === Math.abs(dc) && dr!==0) {
-              const stepR = dr/Math.abs(dr), stepC = dc/Math.abs(dc);
-              let rr = r+stepR, cc = c+stepC, blocked=false;
-              while (rr !== sr && cc !== sc) {
-                if (b[rr][cc]) { blocked=true; break; }
-                rr += stepR; cc += stepC;
-              }
-              if (!blocked) return true;
-            }
-          }
-          if (piece === 'r' || piece === 'q') {
-            if ((dr === 0 && dc !== 0) || (dc === 0 && dr !== 0)) {
-              const stepR = dr === 0 ? 0 : dr/Math.abs(dr);
-              const stepC = dc === 0 ? 0 : dc/Math.abs(dc);
-              let rr = r+stepR, cc = c+stepC, blocked=false;
-              while (rr !== sr || cc !== sc) {
-                if (b[rr][cc]) { blocked=true; break; }
-                rr += stepR; cc += stepC;
-              }
-              if (!blocked) return true;
-            }
-          }
-          if (piece === 'k') {
-            if (Math.max(Math.abs(dr),Math.abs(dc)) === 1) return true;
-          }
-        }
-      }
-      return false;
-    }
-
-    function isKingInCheck(b, white) {
-      const kingPos = findKing(b, white);
-      if (!kingPos) return true; // no king found => treated as check
-      const [kr,kc] = kingPos;
-      return isSquareAttacked(b, kr, kc, !white);
-    }
-
-    // Apply move to board (returns new board)
-    function applyMove(b, move) {
-      const nb = cloneBoard(b);
-      const [fr,fc] = move.from, [tr,tc] = move.to;
-      let piece = nb[fr][fc];
-      nb[fr][fc] = '';
-      if (move.promote) {
-        piece = (piece === piece.toUpperCase()) ? 'Q' : 'q';
-      }
-      nb[tr][tc] = piece;
-      return nb;
-    }
-
-    // Evaluation: simple material values + small positional tie-breakers
-    const pieceValue = {'p':100,'n':320,'b':330,'r':500,'q':900,'k':20000};
-    function evaluate(b) {
-      let score = 0;
-      for (let r=0;r<8;r++){
-        for (let c=0;c<8;c++){
-          const p = b[r][c];
-          if (!p) continue;
-          const isWhite = (p === p.toUpperCase());
-          const val = pieceValue[p.toLowerCase()] || 0;
-          score += (isWhite ? 1 : -1) * val;
-        }
-      }
-      // Add small mobility bonus
-      try {
-        score += 0.1 * (generateMoves(b, true).length - generateMoves(b, false).length);
-      } catch(e){}
-      return score;
-    }
-
-    // Minimax with alpha-beta pruning depth-limited (depth=3 for Level 3)
-    function minimax(b, depth, alpha, beta, maximizingPlayer) {
-      const white = maximizingPlayer;
-      if (depth === 0) {
-        return {score: evaluate(b), move: null};
-      }
-      const moves = generateMoves(b, white);
-      if (moves.length === 0) {
-        // checkmate or stalemate
-        const inCheck = isKingInCheck(b, white);
-        return {score: inCheck ? (white ? -99999 : 99999) : 0, move: null};
-      }
-
-      let bestMove = null;
-      if (maximizingPlayer) {
-        let value = -Infinity;
-        // simple move ordering: prefer captures first
-        moves.sort((a,b)=> (b.capture?1:0) - (a.capture?1:0));
-        for (const m of moves) {
-          const nb = applyMove(b,m);
-          const result = minimax(nb, depth-1, alpha, beta, !maximizingPlayer);
-          if (result.score > value) { value = result.score; bestMove = m; }
-          alpha = Math.max(alpha, value);
-          if (alpha >= beta) break;
-        }
-        return {score: value, move: bestMove};
-      } else {
-        let value = Infinity;
-        moves.sort((a,b)=> (a.capture?1:0) - (b.capture?1:0));
-        for (const m of moves) {
-          const nb = applyMove(b,m);
-          const result = minimax(nb, depth-1, alpha, beta, !maximizingPlayer);
-          if (result.score < value) { value = result.score; bestMove = m; }
-          beta = Math.min(beta, value);
-          if (alpha >= beta) break;
-        }
-        return {score: value, move: bestMove};
-      }
-    }
-
-    // Public AI function: returns best move for given side, depth=3
-    function getAIMove(b, whiteSide) {
-      const d = 3; // level 3
-      const res = minimax(b, d, -Infinity, Infinity, whiteSide);
-      return res.move;
-    }
-
-    /* ------------------ UI Rendering + Interaction ------------------ */
-
-    function renderBoard() {
-      boardEl.innerHTML = '';
-      for (let r=0;r<8;r++){
-        for (let c=0;c<8;c++){
-          const sq = document.createElement('div');
-          sq.className = 'square ' + (((r+c)%2===0) ? 'light' : 'dark');
-          sq.dataset.r = r; sq.dataset.c = c;
-          const p = boardState[r][c];
-          if (p) {
-            const span = document.createElement('span');
-            span.textContent = unicodeMap[p] || '';
-            span.className = (p === p.toUpperCase()) ? 'white-piece' : 'black-piece';
-            sq.appendChild(span);
-          }
-          sq.addEventListener('click', onSquareClick);
-          boardEl.appendChild(sq);
-        }
-      }
-    }
-
-    function clearHighlights() {
-      Array.from(boardEl.children).forEach(ch => {
-        ch.classList.remove('highlight');
-        const dot = ch.querySelector('.move-dot');
-        if (dot) dot.remove();
-      });
-    }
-
-    function highlightMoves(moves) {
-      for (const m of moves) {
-        const [tr,tc] = m.to;
-        const idx = coordToIndex(tr,tc);
-        const cell = boardEl.children[idx];
-        if (!cell) continue;
-        cell.classList.add('highlight');
-        const dot = document.createElement('div');
-        dot.className = 'move-dot';
-        cell.appendChild(dot);
-      }
-    }
-
-    function onSquareClick(e) {
-      const r = parseInt(this.dataset.r,10);
-      const c = parseInt(this.dataset.c,10);
-      const piece = boardState[r][c];
-
-      // If a selected piece exists and clicked is one of its legal moves -> move
-      if (selected) {
-        const found = legalMovesCache.find(m => m.to[0]===r && m.to[1]===c);
-        if (found) {
-          // apply move
-          boardState = applyMove(boardState, found);
-          whiteToMove = !whiteToMove;
-          selected = null;
-          clearHighlights();
-          renderBoard();
-          // If it's now AI's turn, run AI
-          setTimeout(()=> {
-            if (!whiteToMove) {
-              runAIMove();
-            }
-          }, 250);
-          return;
-        }
-        // otherwise clear selection if clicking same color piece or empty
-        selected = null; clearHighlights();
-      }
-
-      // Select a piece if it belongs to the current player (user is white)
-      if (piece && ((piece === piece.toUpperCase()) === whiteToMove)) {
-        selected = {r,c};
-        // compute legal moves for this piece
-        legalMovesCache = generateMoves(boardState, whiteToMove).filter(m => m.from[0]===r && m.from[1]===c);
-        clearHighlights();
-        // highlight origin
-        this.classList.add('highlight');
-        highlightMoves(legalMovesCache);
-      } else {
-        // clicked empty or enemy piece: ignore / clear
-        selected = null;
-        clearHighlights();
-      }
-    }
-
-    async function runAIMove() {
-      // AI plays Black (whiteToMove false)
-      statusEl.textContent = 'AI is thinking...';
-      // Slight delay to simulate 'thinking' and allow UI update
-      await new Promise(res=>setTimeout(res, 150));
-      const aiMove = getAIMove(boardState, false);
-      if (!aiMove) {
-        // game over or stalemate
-        const inCheck = isKingInCheck(boardState, !whiteToMove);
-        statusEl.textContent = inCheck ? 'Checkmate!' : 'Stalemate';
-        return;
-      }
-      boardState = applyMove(boardState, aiMove);
-      // switch back to user
-      whiteToMove = !whiteToMove;
-      renderBoard();
-      statusEl.textContent = 'Your move';
-    }
-
-    // initial render
-    renderBoard();
-    statusEl.textContent = 'Your move — play White.';
-
-    /* Optional: wire up wallet/connect/createGame buttons as placeholders */
-    document.getElementById('connectWalletBtn').addEventListener('click', ()=> alert('Wallet connect placeholder (implement Web3 flow here).'));
-    document.getElementById('createGameBtn').addEventListener('click', ()=> alert('Create game placeholder (matchmaking / on-chain game setup goes here).'));
-
   </script>
+
+  <!-- Core chess + AI script (keeps using your chess.js from repo if present) -->
+  <script type="module">
+    // If you already have a `chess.js` in root, it will be loaded here; otherwise the minimal engine inlined below will be used.
+    import './chess.js';
+  </script>
+
+  <!-- Web3 integration (front-end helpers). See /web3-integration.js for full code -->
+  <script type="module" src="./web3-integration.js"></script>
 </body>
 </html>

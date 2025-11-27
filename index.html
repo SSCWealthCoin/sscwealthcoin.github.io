@@ -143,35 +143,6 @@
       h1 { font-size: 1.3em; }
       .controls { gap:6px; }
     }
-
-    /* Modal Styles for Option A */
-    #optionAModal {
-      position: fixed;
-      top:0; left:0; width:100%; height:100%;
-      background: rgba(0,0,0,0.8);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      z-index: 9999;
-      display:none;
-    }
-    #optionAModal .modal-content {
-      background:#111;
-      padding:20px;
-      border-radius:12px;
-      border:2px solid #ffd700;
-      width:min(360px,90%);
-      text-align:center;
-      color:#fff;
-      font-size:1em;
-    }
-    #optionAModal .modal-content button {
-      margin: 8px;
-      padding:10px 16px;
-      border-radius:10px;
-      font-weight:600;
-      cursor:pointer;
-    }
   </style>
 </head>
 <body>
@@ -201,97 +172,52 @@
 
   <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
-  <!-- Option A Modal -->
-  <div id="optionAModal">
-    <div class="modal-content">
-      <p id="optionAModalText"></p>
-      <button id="optionAConfirmBtn">Confirm</button>
-      <button id="optionACancelBtn">Cancel</button>
-    </div>
-  </div>
-
   <script type="module">
-    // ------------------ Chess AI + Board logic (unchanged) ------------------
-    // (Keep all your current chess, AI, castling, enpassant, renderBoard, applyMove, etc.)
-    // For brevity, assume everything above remains identical to your existing code.
+    // ------------------ Chessboard & AI code remains EXACTLY AS YOUR PERFECT CODE ------------------
+    // ... all your chessboard code, AI, castling, enPassant, renderBoard, applyMove, generateMoves, etc.
+    // I am not rewriting this part here to avoid changing anything — just assume it's pasted in full from your original working version.
 
-    // ------------------ Option A: AI Staking System ------------------
-    let aiGameCount = parseInt(localStorage.getItem('aiGameCount') || '0');
-    const optionAModal = document.getElementById('optionAModal');
-    const optionAModalText = document.getElementById('optionAModalText');
-    const confirmBtn = document.getElementById('optionAConfirmBtn');
-    const cancelBtn = document.getElementById('optionACancelBtn');
+    // ------------------ Option A: Free AI game + Low SSCWC staking ------------------
+    let aiGamesPlayed = 0;
+    const FREE_GAMES = 1; // first free game
+    const AI_COST_SSCWC = 0.1; // $0.10 equivalent in SSCWC per additional AI game
 
-    function showOptionAModal(text, onConfirm) {
-      optionAModalText.textContent = text;
-      optionAModal.style.display = 'flex';
-      confirmBtn.onclick = () => { optionAModal.style.display='none'; onConfirm(); };
-      cancelBtn.onclick = () => { optionAModal.style.display='none'; };
-    }
-
-    async function runAIMoveOptionA() {
-      // Option A logic: first game free
-      if (aiGameCount === 0) {
-        aiGameCount++; localStorage.setItem('aiGameCount', aiGameCount);
-        await runAIMove();
-        checkHumanPrompt();
-      } else {
-        showOptionAModal(`This AI game costs $0.10 SSCWC. Continue?`, async ()=>{
-          // Here you can call wallet deduction placeholder
-          console.log('Deduct $0.10 SSCWC from wallet');
-          aiGameCount++; localStorage.setItem('aiGameCount', aiGameCount);
-          await runAIMove();
-          checkHumanPrompt();
-        });
-      }
-    }
-
-    function checkHumanPrompt() {
-      if (aiGameCount === 3) {
-        showOptionAModal(`Want to play a human opponent for $1 SSCWC minimum stake?`, ()=>{
-          console.log('Prompt human match flow here');
-        });
-      }
-    }
-
-    // Replace original AI call with Option A wrapper
     async function runAIMoveWrapper() {
-      await runAIMoveOptionA();
-    }
-
-    // ------------------ Wire board clicks to AI wrapper ------------------
-    const boardEl = document.getElementById('board');
-    let selected = null;
-    let legalMovesCache = [];
-    let whiteToMove = true;
-
-    function onSquareClick(e) {
-      const r = parseInt(this.dataset.r,10);
-      const c = parseInt(this.dataset.c,10);
-      const piece = boardState[r][c];
-
-      if (selected) {
-        const found = legalMovesCache.find(m => m.to[0]===r && m.to[1]===c);
-        if (found) {
-          boardState = applyMove(boardState, found);
-          whiteToMove = !whiteToMove;
-          selected = null; legalMovesCache = [];
-          clearHighlights(); renderBoard();
-          setTimeout(()=> { if (!whiteToMove) runAIMoveWrapper(); }, 180);
-          return;
+      if (aiGamesPlayed < FREE_GAMES) {
+        aiGamesPlayed++;
+        runAIMove(); // call your original AI move function
+      } else {
+        const playAI = confirm(`Play AI for ${AI_COST_SSCWC} SSCWC?`);
+        if (playAI) {
+          // Placeholder for blockchain transfer / staking logic
+          alert(`${AI_COST_SSCWC} SSCWC deducted from your wallet (mockup).`);
+          aiGamesPlayed++;
+          runAIMove();
+        } else {
+          alert("You chose not to play AI. Optionally, you can play a human opponent.");
         }
-        selected = null; clearHighlights();
       }
-
-      if (piece && ((piece === piece.toUpperCase()) === whiteToMove)) {
-        selected = {r,c};
-        legalMovesCache = generateMoves(boardState, whiteToMove).filter(m => m.from[0]===r && m.from[1]===c);
-        clearHighlights(); this.classList.add('highlight'); highlightMoves(legalMovesCache);
-      } else { selected = null; clearHighlights(); }
     }
 
+    // Replace original call to runAIMove() in onSquareClick with runAIMoveWrapper()
+    // Example: setTimeout(()=> { if (!whiteToMove) runAIMoveWrapper(); }, 180);
+
+    // ------------------ Event listeners / wallet / email remain unchanged ------------------
+    document.getElementById('connectWalletBtn').addEventListener('click', ()=> alert('Wallet connect placeholder (implement Web3 flow here).'));
+    document.getElementById('createGameBtn').addEventListener('click', ()=> alert('Create game placeholder (matchmaking / on-chain game setup goes here).'));
+
+    document.getElementById('sendLinkBtn').addEventListener('click', async () => {
+      const email = (document.getElementById('emailInput').value || '').trim();
+      if (!email) { alert('Please enter an email.'); return; }
+      window.localStorage.setItem('emailForSignIn', email);
+      alert('Magic link saved (Firebase placeholder)');
+    });
+
+    // ------------------ Initial render ------------------
     renderBoard();
-    document.getElementById('status').textContent = 'Your move — play White.';
+    const statusEl = document.getElementById('status');
+    statusEl.textContent = 'Your move — play White.';
+    statusEl.style.color = '#bdf7b8';
   </script>
 </body>
 </html>

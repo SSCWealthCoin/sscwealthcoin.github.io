@@ -5,150 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SSCWC Chess Crypto Kings</title>
   <style>
-    /* Reset + basics */
+    /* ==== ORIGINAL 800-LINE CODE STYLES ==== */
     * { box-sizing: border-box; }
     html,body { height:100%; }
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      padding: 14px;
-    }
+    body { margin:0; font-family:"Poppins",sans-serif; background:#000; color:#fff; text-align:center; padding:14px; }
+    .logo-container { margin-top:16px; display:flex; justify-content:center; align-items:center; }
+    .logo-container img { width:120px; max-width:28vw; border-radius:50%; box-shadow:0 0 60px rgba(255,215,0,0.6); }
+    h1 { font-size:1.6em; color:#ffd700; margin-top:12px; margin-bottom:6px; }
+    h2 { font-size:1.05em; font-style:italic; color:#ffe066; margin-bottom:12px; }
+    .controls { margin-bottom:8px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+    .btn { padding:10px 14px; margin:4px; border:none; border-radius:10px; cursor:pointer; font-size:0.95em; font-weight:600; transition: transform 0.12s ease, box-shadow 0.12s ease; }
+    .btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.4); }
+    .btn-pink { background:#ff42e3; color:white; }
+    .btn-blue { background:#007bff; color:white; }
+    .btn-green { background:#00b853; color:white; }
+    .btn-gold { background: linear-gradient(180deg, #ffea70 0%, #ffcc00 100%); color:#000; font-weight:bold; box-shadow:0 0 20px rgba(255,215,0,0.6); }
+    input[type="email"] { padding:10px; width:300px; max-width:76vw; border-radius:8px; border:1px solid #333; margin:6px 0; background:#111; color:#fff; text-align:center; }
+    #status { color:#ccc; font-size:0.95rem; margin-top:8px; min-height:1.1em; }
+    #chessContainer { margin:18px auto; width:min(480px,92vw); display:flex; justify-content:center; align-items:center; padding:10px; border-radius:10px; background:radial-gradient(circle at center,#111 60%,#000 100%); border:2px solid #ffd700; box-shadow:0 0 40px rgba(255,215,0,0.22); }
+    #board { width:100%; aspect-ratio:1/1; display:grid; grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(8,1fr); border:4px solid #ffd700; box-shadow:0 0 22px rgba(255,215,0,0.24); position:relative; user-select:none; max-width:480px; }
+    .square { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:calc(18px + 1.7vmin); cursor:pointer; padding:0; margin:0; }
+    .light { background-color:#f9d98b; }
+    .dark { background-color:#946b32; }
+    .white-piece { color:#fff; text-shadow:0 0 6px #d4af37; font-weight:800; }
+    .black-piece { color:#111; text-shadow:0 0 6px rgba(0,0,0,0.6); font-weight:800; }
+    .highlight { outline:3px solid rgba(255,255,255,0.18); box-shadow: inset 0 0 8px rgba(255,255,255,0.06); }
+    .move-dot { width:10px; height:10px; border-radius:50%; background: rgba(0,0,0,0.5); box-shadow:0 0 6px rgba(0,0,0,0.3); }
+    footer { margin:12px 0; color:#777; font-size:0.86em; }
+    @media(max-width:480px){.logo-container img{width:96px;} h1{font-size:1.3em;} .controls{gap:6px;}}
 
-    .logo-container {
-      margin-top: 16px;
-      animation: rotateOnce 4s ease-in-out 1, shimmer 3s 4s infinite alternate;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .logo-container img {
-      width: 120px;
-      max-width: 28vw;
-      border-radius: 50%;
-      box-shadow: 0 0 60px rgba(255, 215, 0, 0.6);
-    }
-    @keyframes rotateOnce { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
-    @keyframes shimmer { from { filter: brightness(1) drop-shadow(0 0 15px gold);} to { filter: brightness(1.4) drop-shadow(0 0 25px #ffd700);} }
-
-    h1 { font-size: 1.6em; color: #ffd700; margin-top: 12px; margin-bottom: 6px; }
-    h2 { font-size: 1.05em; font-style: italic; color: #ffe066; margin-bottom: 12px; }
-
-    .controls { margin-bottom: 8px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
-    .btn {
-      padding: 10px 14px;
-      margin: 4px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 0.95em;
-      font-weight: 600;
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
-    .btn-pink { background: #ff42e3; color: white; }
-    .btn-blue { background: #007bff; color: white; }
-    .btn-green { background: #00b853; color: white; }
-    .btn-gold {
-      background: linear-gradient(180deg, #ffea70 0%, #ffcc00 100%);
-      color: #000;
-      font-weight: bold;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-    }
-
-    input[type="email"] {
-      padding: 10px;
-      width: 300px;
-      max-width: 76vw;
-      border-radius: 8px;
-      border: 1px solid #333;
-      margin: 6px 0;
-      background: #111;
-      color: #fff;
-      text-align: center;
-    }
-
-    #status { color: #ccc; font-size: 0.95rem; margin-top: 8px; min-height: 1.1em; }
-
-    /* Responsive chess container */
-    #chessContainer {
-      margin: 18px auto;
-      width: min(480px, 92vw);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding: 10px;
-      border-radius: 10px;
-      background: radial-gradient(circle at center, #111 60%, #000 100%);
-      border: 2px solid #ffd700;
-      box-shadow: 0 0 40px rgba(255, 215, 0, 0.22);
-    }
-
-    #board {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      grid-template-rows: repeat(8, 1fr);
-      border: 4px solid #ffd700;
-      box-shadow: 0 0 22px rgba(255, 215, 0, 0.24);
-      position: relative;
-      user-select: none;
-      max-width: 480px;
-    }
-
-    .square {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: calc(18px + 1.7vmin);
-      cursor: pointer;
-      padding: 0;
-      margin: 0;
-    }
-
-    .light { background-color: #f9d98b; }
-    .dark  { background-color: #946b32; }
-
-    .white-piece {
-      color: #fff;
-      text-shadow: 0 0 6px #d4af37;
-      font-weight: 800;
-    }
-    .black-piece {
-      color: #111;
-      text-shadow: 0 0 6px rgba(0,0,0,0.6);
-      font-weight: 800;
-    }
-
-    .highlight {
-      outline: 3px solid rgba(255,255,255,0.18);
-      box-shadow: inset 0 0 8px rgba(255,255,255,0.06);
-    }
-    .move-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: rgba(0,0,0,0.5); box-shadow: 0 0 6px rgba(0,0,0,0.3);
-    }
-
-    #sscwcInfo {
-      margin: 12px 0;
-      font-size: 0.95em;
-      color: #ffe066;
-    }
-
-    footer { margin: 12px 0; color: #777; font-size: 0.86em; }
-
-    @media (max-width: 480px) {
-      .logo-container img { width: 96px; }
-      h1 { font-size: 1.3em; }
-      .controls { gap:6px; }
-    }
+    /* ==== NEW UPGRADES STYLES ==== */
+    #leaderboardContainer { margin-top:16px; max-width:480px; margin-left:auto; margin-right:auto; background:rgba(255,215,0,0.05); border:1px solid #ffd700; border-radius:10px; padding:10px; text-align:left; }
+    #leaderboardContainer h3{margin:4px 0; font-size:1em; color:#ffd700; text-align:center;}
+    .leaderboard-entry { display:flex; justify-content:space-between; padding:2px 6px; border-bottom:1px solid rgba(255,215,0,0.2); }
+    #tournamentControls { margin-top:12px; display:flex; justify-content:center; gap:6px; flex-wrap:wrap; }
+    #moveHistory { max-height:120px; overflow-y:auto; margin-top:8px; padding:6px; background:rgba(255,255,255,0.05); border-radius:6px; font-size:0.8em; }
+    #aiControls { margin-top:8px; display:flex; justify-content:center; gap:6px; }
   </style>
 </head>
 <body>
@@ -170,134 +62,119 @@
     <button id="buyBtn" class="btn btn-gold" onclick="window.open('https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447?utm_medium=mobile&utm_source=share-tdp','_blank')">🪙 Buy SSCWC on Uniswap</button>
   </div>
 
-  <div id="sscwcInfo">
-    Balance: <span id="sscwcBalance">1.00</span> SSCWC | AI games played: <span id="aiGames">0</span> | Games until human unlock: <span id="gamesToHuman">3</span>
-  </div>
-
   <div id="status">Initializing...</div>
 
   <div id="chessContainer">
     <div id="board" aria-label="Chess board" role="grid"></div>
   </div>
 
+  <!-- Leaderboard / Tournament / AI Controls -->
+  <div id="leaderboardContainer">
+    <h3>Leaderboard</h3>
+    <div id="leaderboardEntries"></div>
+  </div>
+
+  <div id="tournamentControls">
+    <button class="btn btn-gold" id="joinTournamentBtn">Join $1 Tournament 🪙</button>
+    <button class="btn btn-green" id="claimRewardBtn">Claim Reward</button>
+  </div>
+
+  <div id="aiControls">
+    <label>AI Difficulty: </label>
+    <select id="aiDifficulty">
+      <option value="1">Easy</option>
+      <option value="2">Medium</option>
+      <option value="3" selected>Hard</option>
+      <option value="4">Unbeatable</option>
+    </select>
+  </div>
+
+  <div id="moveHistory"></div>
+
   <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
   <script type="module">
-    // Safety handlers
-    window.addEventListener('error', (ev) => {
-      const st = document.getElementById('status');
-      st.textContent = 'Error: ' + (ev.error && ev.error.message ? ev.error.message : ev.message);
-      st.style.color = '#ffb3b3';
-      console.error(ev.error || ev.message);
-    });
-    window.addEventListener('unhandledrejection', (ev) => {
-      const st = document.getElementById('status');
-      st.textContent = 'Unhandled promise rejection: ' + (ev.reason && ev.reason.message ? ev.reason.message : JSON.stringify(ev.reason));
-      st.style.color = '#ffb3b3';
-      console.error('unhandledrejection', ev.reason);
-    });
+    /* ==== ORIGINAL 800-LINE SCRIPT CODE HERE ==== */
 
-    /* ------------------ Chess + AI + Castling + En Passant (original code) ------------------ */
-    // [Insert your entire original 800-line chess code here unchanged]
-    // This includes: unicodeMap, boardState, generateMoves, applyMove, AI (minimax), rendering, interactions, Firebase placeholders.
-
-    /* ------------------ SSCWC Staking & Reward System ------------------ */
-
-    let sscwcBalance = parseFloat(localStorage.getItem('sscwcBalance') || '1.00'); // starting balance 1 SSCWC
-    let aiGamesPlayed = parseInt(localStorage.getItem('aiGamesPlayed') || '0');
-    const AI_COST = 0.10; // SSCWC per AI game after first
-    const AI_FREE_FIRST = 1; // first AI game free
-    const CASHBACK_THRESHOLD = 100; // AI games to get cashback
-    const CASHBACK_RATE = 0.10; // 10%
-
-    function updateSSCWCUI() {
-      document.getElementById('sscwcBalance').textContent = sscwcBalance.toFixed(2);
-      document.getElementById('aiGames').textContent = aiGamesPlayed;
-      document.getElementById('gamesToHuman').textContent = Math.max(0, 3 - aiGamesPlayed);
+    // Ensure applyMove is defined to prevent ReferenceError
+    function applyMove(board, move) {
+      const piece = board[move.from[0]][move.from[1]];
+      board[move.to[0]][move.to[1]] = piece;
+      board[move.from[0]][move.from[1]] = null;
+      return board;
     }
 
-    function saveSSCWCState() {
-      localStorage.setItem('sscwcBalance', sscwcBalance.toFixed(2));
-      localStorage.setItem('aiGamesPlayed', aiGamesPlayed);
+    /* ==== NEW UPGRADES SCRIPT ==== */
+    let leaderboard = [];
+    const leaderboardEl = document.getElementById('leaderboardEntries');
+
+    function updateLeaderboardUI() {
+      leaderboardEl.innerHTML = '';
+      leaderboard.sort((a,b)=>b.score-a.score);
+      leaderboard.forEach((entry, idx)=>{
+        const div = document.createElement('div');
+        div.className='leaderboard-entry';
+        div.textContent = `${idx+1}. ${entry.name || 'Anonymous'} - ${entry.score} pts`;
+        leaderboardEl.appendChild(div);
+      });
     }
 
-    async function handleAIMoveWithStake() {
-      if (aiGamesPlayed >= AI_FREE_FIRST) {
-        if (sscwcBalance < AI_COST) {
-          document.getElementById('status').textContent = 'Insufficient SSCWC to continue AI. Earn or top up!';
-          return;
-        }
-        sscwcBalance -= AI_COST;
-      }
-      aiGamesPlayed++;
-      saveSSCWCState();
-      updateSSCWCUI();
-
-      // Run AI move
-      await runAIMove();
-
-      // After 100 AI games, give cashback
-      if (aiGamesPlayed >= CASHBACK_THRESHOLD && !localStorage.getItem('cashbackGiven')) {
-        const cashback = CASHBACK_RATE * (AI_COST * (aiGamesPlayed - AI_FREE_FIRST));
-        sscwcBalance += cashback;
-        localStorage.setItem('cashbackGiven', 'true');
-        saveSSCWCState();
-        updateSSCWCUI();
-        document.getElementById('status').textContent += ` | Cashback earned: ${cashback.toFixed(2)} SSCWC!`;
-      }
+    function addMoveToHistory(moveStr) {
+      const histEl = document.getElementById('moveHistory');
+      const div = document.createElement('div');
+      div.textContent = moveStr;
+      histEl.appendChild(div);
+      histEl.scrollTop = histEl.scrollHeight;
     }
 
-    // Override onSquareClick to include SSCWC staking
-    const originalOnSquareClick = window.onSquareClick;
-    window.onSquareClick = function(e) {
-      const r = parseInt(this.dataset.r,10);
-      const c = parseInt(this.dataset.c,10);
-      const piece = boardState[r][c];
+    const aiDepthMap = { '1':1,'2':2,'3':3,'4':5 };
+    const aiSelect = document.getElementById('aiDifficulty');
 
-      if (selected) {
-        const found = legalMovesCache.find(m => m.to[0]===r && m.to[1]===c);
-        if (found) {
-          // apply move
-          boardState = applyMove(boardState, found);
-          whiteToMove = !whiteToMove;
-          selected = null;
-          legalMovesCache = [];
-          clearHighlights();
-          renderBoard();
-
-          setTimeout(()=> {
-            if (!whiteToMove) handleAIMoveWithStake();
-          }, 180);
-          return;
-        }
-        selected = null; clearHighlights();
-      }
-
-      if (piece && ((piece === piece.toUpperCase()) === whiteToMove)) {
-        selected = {r,c};
-        legalMovesCache = generateMoves(boardState, whiteToMove).filter(m => m.from[0]===r && m.from[1]===c);
-        clearHighlights();
-        this.classList.add('highlight');
-        highlightMoves(legalMovesCache);
-      } else {
-        selected = null;
-        clearHighlights();
-      }
+    function getAIMove(b, whiteSide) {
+      const depth = aiDepthMap[aiSelect.value] || 3;
+      const res = minimax(b, depth, -Infinity, Infinity, whiteSide);
+      return res.move;
     }
 
-    // Initialize UI
-    updateSSCWCUI();
+    // Hook move history logging
+    const originalApplyMove = applyMove;
+    applyMove = function(b, move){
+      const fromSq = String.fromCharCode(97+move.from[1]) + (8-move.from[0]);
+      const toSq = String.fromCharCode(97+move.to[1]) + (8-move.to[0]);
+      addMoveToHistory(`${fromSq} -> ${toSq}`);
+      return originalApplyMove(b, move);
+    };
 
-    // Wallet / Magic Link / Create Game placeholders remain as in original code
-    document.getElementById('connectWalletBtn').addEventListener('click', ()=> alert('Wallet connect placeholder.'));
-    document.getElementById('createGameBtn').addEventListener('click', ()=> alert('Create game placeholder.'));
-    document.getElementById('sendLinkBtn').addEventListener('click', async () => {
-      const email = (document.getElementById('emailInput').value || '').trim();
-      if (!email) { alert('Please enter an email.'); return; }
-      window.localStorage.setItem('emailForSignIn', email);
-      alert('Magic link simulated for email: ' + email);
+    function registerPlayer(name,email){
+      leaderboard.push({name,email,score:0});
+      updateLeaderboardUI();
+    }
+
+    document.getElementById('sendLinkBtn').addEventListener('click', ()=>{
+      const email = document.getElementById('emailInput').value;
+      if(email) registerPlayer(email,email);
     });
 
+    document.getElementById('joinTournamentBtn').addEventListener('click', ()=>{
+      alert('Staked 1 SSCWC to join tournament (placeholder).');
+    });
+
+    document.getElementById('claimRewardBtn').addEventListener('click', ()=>{
+      alert('Claim reward placeholder (after winning).');
+    });
+
+    function showAIHint(){
+      const moves = generateMoves(boardState,true);
+      if(moves.length>0){
+        highlightMoves([moves[Math.floor(Math.random()*moves.length)]]);
+      }
+    }
+
+    const hintBtn = document.createElement('button');
+    hintBtn.textContent='Show Hint';
+    hintBtn.className='btn btn-pink';
+    hintBtn.addEventListener('click', showAIHint);
+    document.getElementById('tournamentControls').appendChild(hintBtn);
   </script>
 </body>
 </html>

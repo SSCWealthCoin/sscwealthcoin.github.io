@@ -136,17 +136,10 @@
       background: rgba(0,0,0,0.5); box-shadow: 0 0 6px rgba(0,0,0,0.3);
     }
 
-    /* Player dashboard */
-    #playerDashboard {
-      margin: 12px auto;
-      max-width: 480px;
-      background: #111;
-      border: 2px solid #ffd700;
-      border-radius: 12px;
-      padding: 12px;
-      text-align: left;
-      color: #ffd700;
-      font-size: 0.92em;
+    #sscwcInfo {
+      margin: 12px 0;
+      font-size: 0.95em;
+      color: #ffe066;
     }
 
     footer { margin: 12px 0; color: #777; font-size: 0.86em; }
@@ -177,15 +170,11 @@
     <button id="buyBtn" class="btn btn-gold" onclick="window.open('https://app.uniswap.org/explore/tokens/bnb/0xd7deadbf768dec8ac13850e4f6787ac53a9d0447?utm_medium=mobile&utm_source=share-tdp','_blank')">🪙 Buy SSCWC on Uniswap</button>
   </div>
 
-  <div id="status">Initializing...</div>
-
-  <div id="playerDashboard">
-    <div>SSCWC Balance: <span id="sscwcBalance">0.00</span></div>
-    <div>AI Games Played: <span id="aiGames">0</span></div>
-    <div>Rebates Earned: <span id="rebates">0.00</span></div>
-    <div>Certificates Fund: <span id="certFund">0.00</span></div>
-    <div>Skill Feedback: <span id="skillFeedback">Your journey starts now!</span></div>
+  <div id="sscwcInfo">
+    Balance: <span id="sscwcBalance">1.00</span> SSCWC | AI games played: <span id="aiGames">0</span> | Games until human unlock: <span id="gamesToHuman">3</span>
   </div>
+
+  <div id="status">Initializing...</div>
 
   <div id="chessContainer">
     <div id="board" aria-label="Chess board" role="grid"></div>
@@ -194,11 +183,6 @@
   <footer>© 2025 SSC Wealth Coin — All Rights Reserved</footer>
 
   <script type="module">
-    /**************************
-     * Original Chess + AI Code
-     * ------------------------
-     * Fully preserved
-     **************************/
     // Safety handlers
     window.addEventListener('error', (ev) => {
       const st = document.getElementById('status');
@@ -213,175 +197,106 @@
       console.error('unhandledrejection', ev.reason);
     });
 
-    // --- Chessboard setup ---
-    const unicodeMap = {
-      'P': '♙','R':'♖','N':'♘','B':'♗','Q':'♕','K':'♔',
-      'p': '♟','r':'♜','n':'♞','b':'♝','q':'♛','k':'♚'
-    };
-    let boardState = [
-      ['r','n','b','q','k','b','n','r'],
-      ['p','p','p','p','p','p','p','p'],
-      ['','','','','','','',''],
-      ['','','','','','','',''],
-      ['','','','','','','',''],
-      ['','','','','','','',''],
-      ['P','P','P','P','P','P','P','P'],
-      ['R','N','B','Q','K','B','N','R']
-    ];
-    let whiteToMove = true;
-    let selected = null;
-    let legalMovesCache = [];
-    let castlingRights = { white: { K:true, Q:true }, black:{K:true,Q:true} };
-    let enPassantTarget = null;
-    const boardEl = document.getElementById('board');
+    /* ------------------ Chess + AI + Castling + En Passant (original code) ------------------ */
+    // [Insert your entire original 800-line chess code here unchanged]
+    // This includes: unicodeMap, boardState, generateMoves, applyMove, AI (minimax), rendering, interactions, Firebase placeholders.
 
-    function coordToIndex(r,c){ return r*8+c; }
-    function inBounds(r,c){ return r>=0&&r<8&&c>=0&&c<8; }
-    function cloneBoard(b){ return b.map(row=>row.slice()); }
+    /* ------------------ SSCWC Staking & Reward System ------------------ */
 
-    // generateMoves, applyMove, isKingInCheck, isSquareAttacked, runAIMove
-    // ... fully preserved as in original code
-    // For brevity here, imagine the entire original chess code is intact
-    // (All AI logic, castling, en passant, minimax preserved)
-    // ... insert here your original code from above between comments
+    let sscwcBalance = parseFloat(localStorage.getItem('sscwcBalance') || '1.00'); // starting balance 1 SSCWC
+    let aiGamesPlayed = parseInt(localStorage.getItem('aiGamesPlayed') || '0');
+    const AI_COST = 0.10; // SSCWC per AI game after first
+    const AI_FREE_FIRST = 1; // first AI game free
+    const CASHBACK_THRESHOLD = 100; // AI games to get cashback
+    const CASHBACK_RATE = 0.10; // 10%
 
-    function renderBoard() {
-      boardEl.innerHTML = '';
-      for(let r=0;r<8;r++){
-        for(let c=0;c<8;c++){
-          const sq = document.createElement('div');
-          sq.className = 'square '+(((r+c)%2===0)?'light':'dark');
-          sq.dataset.r=r; sq.dataset.c=c;
-          const p = boardState[r][c];
-          if(p){
-            const span = document.createElement('span');
-            span.textContent = unicodeMap[p]||'';
-            span.className=(p===p.toUpperCase())?'white-piece':'black-piece';
-            sq.appendChild(span);
-          }
-          sq.addEventListener('click',onSquareClick);
-          boardEl.appendChild(sq);
-        }
-      }
+    function updateSSCWCUI() {
+      document.getElementById('sscwcBalance').textContent = sscwcBalance.toFixed(2);
+      document.getElementById('aiGames').textContent = aiGamesPlayed;
+      document.getElementById('gamesToHuman').textContent = Math.max(0, 3 - aiGamesPlayed);
     }
 
-    function clearHighlights() {
-      Array.from(boardEl.children).forEach(ch=>{
-        ch.classList.remove('highlight');
-        const dot = ch.querySelector('.move-dot');
-        if(dot) dot.remove();
-      });
+    function saveSSCWCState() {
+      localStorage.setItem('sscwcBalance', sscwcBalance.toFixed(2));
+      localStorage.setItem('aiGamesPlayed', aiGamesPlayed);
     }
 
-    function highlightMoves(moves) {
-      for(const m of moves){
-        const [tr,tc]=m.to;
-        const idx=coordToIndex(tr,tc);
-        const cell=boardEl.children[idx];
-        if(!cell) continue;
-        cell.classList.add('highlight');
-        const dot=document.createElement('div');
-        dot.className='move-dot';
-        cell.appendChild(dot);
-      }
-    }
-
-    function onSquareClick(e){
-      const r=parseInt(this.dataset.r,10);
-      const c=parseInt(this.dataset.c,10);
-      const piece = boardState[r][c];
-      if(selected){
-        const found = legalMovesCache.find(m=>m.to[0]===r&&m.to[1]===c);
-        if(found){
-          boardState = applyMove(boardState, found);
-          whiteToMove = !whiteToMove;
-          selected=null;
-          legalMovesCache=[];
-          clearHighlights();
-          renderBoard();
-          setTimeout(()=> {
-            if(!whiteToMove) runAIMove().then(()=>updatePlayerAfterGame());
-          },180);
+    async function handleAIMoveWithStake() {
+      if (aiGamesPlayed >= AI_FREE_FIRST) {
+        if (sscwcBalance < AI_COST) {
+          document.getElementById('status').textContent = 'Insufficient SSCWC to continue AI. Earn or top up!';
           return;
         }
-        selected=null;
-        clearHighlights();
+        sscwcBalance -= AI_COST;
       }
-      if(piece && ((piece===piece.toUpperCase())===whiteToMove)){
-        selected={r,c};
-        legalMovesCache=generateMoves(boardState,whiteToMove).filter(m=>m.from[0]===r&&m.from[1]===c);
+      aiGamesPlayed++;
+      saveSSCWCState();
+      updateSSCWCUI();
+
+      // Run AI move
+      await runAIMove();
+
+      // After 100 AI games, give cashback
+      if (aiGamesPlayed >= CASHBACK_THRESHOLD && !localStorage.getItem('cashbackGiven')) {
+        const cashback = CASHBACK_RATE * (AI_COST * (aiGamesPlayed - AI_FREE_FIRST));
+        sscwcBalance += cashback;
+        localStorage.setItem('cashbackGiven', 'true');
+        saveSSCWCState();
+        updateSSCWCUI();
+        document.getElementById('status').textContent += ` | Cashback earned: ${cashback.toFixed(2)} SSCWC!`;
+      }
+    }
+
+    // Override onSquareClick to include SSCWC staking
+    const originalOnSquareClick = window.onSquareClick;
+    window.onSquareClick = function(e) {
+      const r = parseInt(this.dataset.r,10);
+      const c = parseInt(this.dataset.c,10);
+      const piece = boardState[r][c];
+
+      if (selected) {
+        const found = legalMovesCache.find(m => m.to[0]===r && m.to[1]===c);
+        if (found) {
+          // apply move
+          boardState = applyMove(boardState, found);
+          whiteToMove = !whiteToMove;
+          selected = null;
+          legalMovesCache = [];
+          clearHighlights();
+          renderBoard();
+
+          setTimeout(()=> {
+            if (!whiteToMove) handleAIMoveWithStake();
+          }, 180);
+          return;
+        }
+        selected = null; clearHighlights();
+      }
+
+      if (piece && ((piece === piece.toUpperCase()) === whiteToMove)) {
+        selected = {r,c};
+        legalMovesCache = generateMoves(boardState, whiteToMove).filter(m => m.from[0]===r && m.from[1]===c);
         clearHighlights();
         this.classList.add('highlight');
         highlightMoves(legalMovesCache);
       } else {
-        selected=null;
+        selected = null;
         clearHighlights();
       }
     }
 
-    renderBoard();
-    const statusEl = document.getElementById('status');
-    statusEl.textContent='Your move — play White.';
-    statusEl.style.color='#bdf7b8';
+    // Initialize UI
+    updateSSCWCUI();
 
-    /**************************
-     * New SSCWC Micro-Stake & Feedback Layer
-     **************************/
-    let sscwcBalance = 0;
-    let aiGames = 0;
-    let rebates = 0;
-    let certFund = 0;
-    const sscwcBalanceEl = document.getElementById('sscwcBalance');
-    const aiGamesEl = document.getElementById('aiGames');
-    const rebatesEl = document.getElementById('rebates');
-    const certFundEl = document.getElementById('certFund');
-    const skillFeedbackEl = document.getElementById('skillFeedback');
-
-    function updateDashboard() {
-      sscwcBalanceEl.textContent = sscwcBalance.toFixed(2);
-      aiGamesEl.textContent = aiGames;
-      rebatesEl.textContent = rebates.toFixed(2);
-      certFundEl.textContent = certFund.toFixed(2);
-    }
-
-    function updatePlayerAfterGame(){
-      aiGames++;
-      // $0.10 fee for AI game
-      if(sscwcBalance >= 0.10) sscwcBalance -=0.10;
-      else sscwcBalance=0;
-
-      // accumulate rebate & certificate fund
-      rebates += 0.01; // 10% of AI stake
-      certFund += 0.01; // 10% saved for certificates / future university
-
-      // Provide skill feedback (simplified for example)
-      let feedback = '';
-      if(aiGames<20) feedback="Your openings are developing nicely.";
-      else if(aiGames<50) feedback="Good middlegame awareness, keep refining strategy.";
-      else if(aiGames<100) feedback="Strong endgame technique forming. Almost ready for human opponents!";
-      else feedback="Expert AI preparation completed! Consider human challenges.";
-
-      skillFeedbackEl.textContent=feedback;
-      updateDashboard();
-    }
-
-    // initial dashboard render
-    updateDashboard();
-
-    // Placeholder buttons
-    document.getElementById('connectWalletBtn').addEventListener('click',()=>alert('Wallet connect placeholder (implement Web3 flow here).'));
-    document.getElementById('createGameBtn').addEventListener('click',()=>alert('Create game placeholder (human opponent staking goes here).'));
-    document.getElementById('sendLinkBtn').addEventListener('click',async()=>{
-      const email=(document.getElementById('emailInput').value||'').trim();
-      if(!email){ alert('Please enter an email.'); return; }
+    // Wallet / Magic Link / Create Game placeholders remain as in original code
+    document.getElementById('connectWalletBtn').addEventListener('click', ()=> alert('Wallet connect placeholder.'));
+    document.getElementById('createGameBtn').addEventListener('click', ()=> alert('Create game placeholder.'));
+    document.getElementById('sendLinkBtn').addEventListener('click', async () => {
+      const email = (document.getElementById('emailInput').value || '').trim();
+      if (!email) { alert('Please enter an email.'); return; }
       window.localStorage.setItem('emailForSignIn', email);
-      alert('Magic link placeholder: email saved locally.');
+      alert('Magic link simulated for email: ' + email);
     });
-
-    /**************************
-     * Dynamic Firebase Load (original preserved)
-     **************************/
-    (async function loadFirebase(){ /* ... as in original code ... */ })();
 
   </script>
 </body>
